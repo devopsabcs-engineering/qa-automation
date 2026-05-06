@@ -28,7 +28,7 @@ trigger:
     include:
       - src/**
       - tests/**
-      - azure-pipelines.yml
+      - .azuredevops/pipelines/ci-cd.yml
       - global.json
       - OntarioCsc.slnx
 
@@ -82,21 +82,19 @@ stages:
             inputs:
               command: 'test'
               projects: '$(testProject)'
-              arguments: >-
-                --configuration $(buildConfiguration)
-                --no-build
-                --logger "trx;LogFileName=test-results.trx"
-                --results-directory $(Agent.TempDirectory)/TestResults
-                --collect:"XPlat Code Coverage"
-              # publishTestResults: true is the default for `command: test` —
-              # this is what lights up the Tests tab in Azure DevOps.
+              # `publishTestResults: true` makes the task append its own
+              # `--logger trx --results-directory <agent-temp>/<guid>` and
+              # auto-publishes the .trx files to the Azure DevOps Tests tab.
+              # We only add `--collect` for code coverage; coverage XML lands
+              # next to the .trx in the same results directory.
+              arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage"'
               publishTestResults: true
 
           - task: PublishCodeCoverageResults@2
             displayName: 'Publish code coverage'
             condition: succeededOrFailed()
             inputs:
-              summaryFileLocation: '$(Agent.TempDirectory)/TestResults/**/coverage.cobertura.xml'
+              summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
           - task: DotNetCoreCLI@2
             displayName: 'Publish web app'
