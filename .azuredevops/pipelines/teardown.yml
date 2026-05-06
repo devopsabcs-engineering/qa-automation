@@ -1,0 +1,90 @@
+# =====================================================================
+# Azure DevOps pipeline — Ontario CSC workshop teardown
+# ---------------------------------------------------------------------
+# Tears down the Azure resource group provisioned by ci-cd.yml so the
+# workshop environment can be cleaned up between cohorts (or when no
+# longer needed).
+#
+# Safety controls:
+#   1. Manual trigger only (`trigger: none`, `pr: none`). This pipeline
+#      will never run on a push or PR — someone has to start it.
+#   2. Runtime `confirm` parameter that must be set to the literal string
+#      'DELETE' before any az command is executed.
+#   3. Targets the `ontario-csc-teardown` environment. Configure required
+#      approvers on that environment in the ADO UI:
+#         Project settings -> Environments -> ontario-csc-teardown
+#         -> Approvals and checks -> + -> Approvals
+#      The deployment job will pause until an approver clicks "Approve".
+#
+# To run:
+#   Pipelines -> qa-automation-teardown -> Run pipeline -> set `confirm`
+#   to DELETE -> Run -> wait for approver -> the resource group is
+#   deleted with `az group delete --yes`.
+# =====================================================================
+
+trigger: none
+pr: none
+
+parameters:
+  - name: confirm
+    displayName: Type DELETE to confirm teardown of the resource group
+    type: string
+    default: 'no'
+  - name: resourceGroup
+    displayName: Resource group to delete
+    type: string
+    default: 'rg-ontario-csc-dev-cac'
+
+variables:
+  azureServiceConnection: 'sc-ontario-csc'
+
+stages:
+  - stage: Teardown
+    displayName: Teardown Azure resources
+    jobs:
+      - deployment: TeardownEnvironment
+        displayName: Delete resource group ${{ parameters.resourceGroup }}
+        # Approvals are configured on this environment in the ADO UI.
+        # The job will not start until an approver signs off.
+        environment: 'ontario-csc-teardown'
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+
+                - task: PowerShell@2
+                  displayName: 'Validate confirmation token'
+                  inputs:
+                    targetType: 'inline'
+                    script: |
+                      $confirm = '${{ parameters.confirm }}'
+                      if ($confirm -cne 'DELETE') {
+                          Write-Host "##vso[task.logissue type=error]Confirmation parameter was '$confirm'. Re-run the pipeline and set 'confirm' to the literal string DELETE (case-sensitive) to proceed."
+                          exit 1
+                      }
+                      Write-Host "Confirmation accepted. Proceeding with teardown of '${{ parameters.resourceGroup }}'."
+
+                - task: AzureCLI@2
+                  displayName: 'Delete resource group ${{ parameters.resourceGroup }}'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    scriptType: 'pscore'
+                    scriptLocation: 'inlineScript'
+                    inlineScript: |
+                      $rg = '${{ parameters.resourceGroup }}'
+
+                      $exists = az group exists --name $rg | ConvertFrom-Json
+                      if (-not $exists) {
+                          Write-Host "Resource group '$rg' does not exist. Nothing to do."
+                          exit 0
+                      }
+
+                      Write-Host "Deleting resource group '$rg' (this can take several minutes)..."
+                      az group delete --name $rg --yes
+                      if ($LASTEXITCODE -ne 0) {
+                          throw "az group delete failed with exit code $LASTEXITCODE"
+                      }
+                      Write-Host "Resource group '$rg' deleted."
