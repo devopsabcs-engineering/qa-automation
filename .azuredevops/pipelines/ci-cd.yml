@@ -5,13 +5,14 @@
 # Stage 2: Run xUnit tests, publish results to the ADO "Tests" tab,
 #          and publish code coverage to the "Code Coverage" tab.
 # Stage 3: Publish the web app as a build artifact.
-# Stage 4: (Optional) Deploy the artifact to an Azure App Service.
+# Stage 4: Provision the App Service via Bicep (idempotent) and deploy
+#          the published artifact to it.
 #
-# To enable the deploy stage:
-#   1. Create an Azure Resource Manager service connection in your ADO
-#      project (Project settings -> Service connections).
-#   2. Set the variables below (azureServiceConnection, appServiceName).
-#   3. Set DeployToAppService to 'true' in pipeline variables (or here).
+# Prereqs for the Deploy stage:
+#   1. An Azure Resource Manager service connection named by
+#      `azureServiceConnection` exists in the ADO project.
+#   2. The service principal behind it has Contributor on the target
+#      resource group (or subscription).
 #
 # When unit tests run via `dotnet test`, .trx results are produced and
 # automatically picked up by the DotNetCoreCLI@2 task. Once a Playwright
@@ -28,6 +29,7 @@ trigger:
     include:
       - src/**
       - tests/**
+      - infra/**
       - .azuredevops/pipelines/ci-cd.yml
       - global.json
       - OntarioCsc.slnx
@@ -43,11 +45,12 @@ variables:
   solution: 'OntarioCsc.slnx'
   webProject: 'src/OntarioCsc.Web/OntarioCsc.Web.csproj'
   testProject: 'tests/OntarioCsc.Web.Tests/OntarioCsc.Web.Tests.csproj'
-  # Set to 'true' once the App Service + service connection exist.
-  DeployToAppService: 'false'
-  azureServiceConnection: 'sc-ontario-csc'      # e.g. 'sc-ontario-csc'
-  appServiceName: 'app-ontario-csc-dev-cac'              # e.g. 'app-ontario-csc-dev-cac'
-  appServiceResourceGroup: 'rg-ontario-csc-dev-cac'     # e.g. 'rg-ontario-csc-dev-cac'
+  # Azure deployment target. Override at the pipeline level (not here)
+  # if any value differs between environments.
+  azureServiceConnection: 'sc-ontario-csc'
+  azureLocation: 'canadacentral'
+  appServiceName: 'app-ontario-csc-dev-cac'
+  appServiceResourceGroup: 'rg-ontario-csc-dev-cac'
 
 stages:
   - stage: Build
@@ -116,13 +119,20 @@ stages:
               artifact: 'web'
               publishLocation: 'pipeline'
 
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish infra (Bicep) artifact'
+            inputs:
+              targetPath: '$(Build.SourcesDirectory)/infra'
+              artifact: 'infra'
+              publishLocation: 'pipeline'
+
   - stage: Deploy
     displayName: Deploy to Azure App Service
     dependsOn: Build
-    condition: and(succeeded(), eq(variables['DeployToAppService'], 'true'))
+    condition: succeeded()
     jobs:
       - deployment: DeployWebApp
-        displayName: Deploy web app
+        displayName: Provision infra and deploy web app
         environment: 'ontario-csc-dev'
         pool:
           vmImage: 'ubuntu-latest'
@@ -132,6 +142,27 @@ stages:
               steps:
                 - download: current
                   artifact: web
+
+                - download: current
+                  artifact: infra
+
+                - task: AzureCLI@2
+                  displayName: 'Provision App Service via Bicep'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    scriptType: 'pscore'
+                    scriptLocation: 'inlineScript'
+                    inlineScript: |
+                      az group create `
+                        --name "$(appServiceResourceGroup)" `
+                        --location "$(azureLocation)" `
+                        --output none
+
+                      az deployment group create `
+                        --resource-group "$(appServiceResourceGroup)" `
+                        --template-file "$(Pipeline.Workspace)/infra/main.bicep" `
+                        --parameters appServiceName="$(appServiceName)" location="$(azureLocation)" `
+                        --output none
 
                 - task: AzureWebApp@1
                   displayName: 'Deploy to App Service'
