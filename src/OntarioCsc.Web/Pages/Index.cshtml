@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Common Service Centre — request a service";
+}
+
+<section class="ontario-hero">
+    <div class="ontario-row">
+        <div class="ontario-columns ontario-large-12">
+            <p class="ontario-eyebrow">Common Service Centre (CSC)</p>
+            <h1 class="ontario-h1">Request a Government of Ontario service</h1>
+            <p class="ontario-lead">
+                Submit a non-urgent request to the Common Service Centre. A service
+                representative will follow up by email within five business days.
+            </p>
+            <p>
+                <a id="cta-new-request" class="ontario-button ontario-button--primary" asp-page="/Requests/New">
+                    Start a new request
+                </a>
+                <a class="ontario-button ontario-button--secondary" asp-page="/Requests/Index">
+                    View existing requests
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="ontario-section">
+    <div class="ontario-row">
+        <div class="ontario-columns ontario-large-8">
+            <h2 class="ontario-h2">What you can do here</h2>
+            <ul class="ontario-list ontario-list--unordered">
+                <li>Submit a service request for one of the supported categories.</li>
+                <li>Receive a tracking confirmation immediately on screen.</li>
+                <li>Review the status of submitted requests in the dashboard.</li>
+            </ul>
+
+            <h2 class="ontario-h2">For emergencies</h2>
+            <div class="ontario-callout ontario-callout--alert">
+                <p>
+                    If this is a life-threatening emergency, call <strong>9-1-1</strong>.
+                    Do not use this form for emergencies.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

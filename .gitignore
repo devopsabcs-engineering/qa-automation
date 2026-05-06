@@ -3,6 +3,18 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# --- Workshop additions ---------------------------------------------
+# Vendored Ontario Design System distribution package, fetched on demand
+# by `scripts/Get-OntarioDesignSystem.ps1`. Not committed because it is a
+# binary distribution; CI re-downloads it on every run.
+src/OntarioCsc.Web/wwwroot/vendor/
+
+# Playwright test outputs (added in a later workshop module).
+playwright-report/
+playwright-tests/test-results/
+playwright-tests/node_modules/
+# --------------------------------------------------------------------
+
 # User-specific files
 *.rsuser
 *.suo
