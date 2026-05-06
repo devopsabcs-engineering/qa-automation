@@ -45,9 +45,9 @@ variables:
   testProject: 'tests/OntarioCsc.Web.Tests/OntarioCsc.Web.Tests.csproj'
   # Set to 'true' once the App Service + service connection exist.
   DeployToAppService: 'false'
-  azureServiceConnection: ''      # e.g. 'sc-ontario-csc'
-  appServiceName: ''              # e.g. 'app-ontario-csc-dev-cac'
-  appServiceResourceGroup: ''     # e.g. 'rg-ontario-csc-dev-cac'
+  azureServiceConnection: 'sc-ontario-csc'      # e.g. 'sc-ontario-csc'
+  appServiceName: 'app-ontario-csc-dev-cac'              # e.g. 'app-ontario-csc-dev-cac'
+  appServiceResourceGroup: 'rg-ontario-csc-dev-cac'     # e.g. 'rg-ontario-csc-dev-cac'
 
 stages:
   - stage: Build
