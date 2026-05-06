@@ -13,6 +13,10 @@ src/OntarioCsc.Web/wwwroot/vendor/
 playwright-report/
 playwright-tests/test-results/
 playwright-tests/node_modules/
+
+# Local run artifacts produced by scripts/start-app.ps1 -Background
+# (PID file + stdout/stderr log).
+.run/
 # --------------------------------------------------------------------
 
 # User-specific files
