@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/OntarioCsc.Web/OntarioCsc.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OntarioCsc.Web.Tests/OntarioCsc.Web.Tests.csproj" />
+  </Folder>
+</Solution>

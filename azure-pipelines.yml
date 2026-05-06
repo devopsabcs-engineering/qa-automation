@@ -1,0 +1,146 @@
+# =====================================================================
+# Azure DevOps pipeline — Ontario Common Service Centre workshop demo
+# ---------------------------------------------------------------------
+# Stage 1: Build the ASP.NET Core 10 solution.
+# Stage 2: Run xUnit tests, publish results to the ADO "Tests" tab,
+#          and publish code coverage to the "Code Coverage" tab.
+# Stage 3: Publish the web app as a build artifact.
+# Stage 4: (Optional) Deploy the artifact to an Azure App Service.
+#
+# To enable the deploy stage:
+#   1. Create an Azure Resource Manager service connection in your ADO
+#      project (Project settings -> Service connections).
+#   2. Set the variables below (azureServiceConnection, appServiceName).
+#   3. Set DeployToAppService to 'true' in pipeline variables (or here).
+#
+# When unit tests run via `dotnet test`, .trx results are produced and
+# automatically picked up by the DotNetCoreCLI@2 task. Once a Playwright
+# project is added (see README.md), append a PublishTestResults@2 step
+# pointing at its JUnit XML output to surface those results in the same
+# Tests tab.
+# =====================================================================
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - src/**
+      - tests/**
+      - azure-pipelines.yml
+      - global.json
+      - OntarioCsc.slnx
+
+pr:
+  branches:
+    include:
+      - main
+
+variables:
+  buildConfiguration: 'Release'
+  dotnetSdkVersion: '10.0.x'
+  solution: 'OntarioCsc.slnx'
+  webProject: 'src/OntarioCsc.Web/OntarioCsc.Web.csproj'
+  testProject: 'tests/OntarioCsc.Web.Tests/OntarioCsc.Web.Tests.csproj'
+  # Set to 'true' once the App Service + service connection exist.
+  DeployToAppService: 'false'
+  azureServiceConnection: ''      # e.g. 'sc-ontario-csc'
+  appServiceName: ''              # e.g. 'app-ontario-csc-dev-cac'
+  appServiceResourceGroup: ''     # e.g. 'rg-ontario-csc-dev-cac'
+
+stages:
+  - stage: Build
+    displayName: Build & Test
+    jobs:
+      - job: BuildAndTest
+        displayName: Build solution and run tests
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK $(dotnetSdkVersion)'
+            inputs:
+              packageType: 'sdk'
+              version: '$(dotnetSdkVersion)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore NuGet packages'
+            inputs:
+              command: 'restore'
+              projects: '$(solution)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build solution ($(buildConfiguration))'
+            inputs:
+              command: 'build'
+              projects: '$(solution)'
+              arguments: '--configuration $(buildConfiguration) --no-restore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Run xUnit tests + collect coverage'
+            inputs:
+              command: 'test'
+              projects: '$(testProject)'
+              arguments: >-
+                --configuration $(buildConfiguration)
+                --no-build
+                --logger "trx;LogFileName=test-results.trx"
+                --results-directory $(Agent.TempDirectory)/TestResults
+                --collect:"XPlat Code Coverage"
+              # publishTestResults: true is the default for `command: test` —
+              # this is what lights up the Tests tab in Azure DevOps.
+              publishTestResults: true
+
+          - task: PublishCodeCoverageResults@2
+            displayName: 'Publish code coverage'
+            condition: succeededOrFailed()
+            inputs:
+              summaryFileLocation: '$(Agent.TempDirectory)/TestResults/**/coverage.cobertura.xml'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish web app'
+            inputs:
+              command: 'publish'
+              projects: '$(webProject)'
+              arguments: >-
+                --configuration $(buildConfiguration)
+                --no-build
+                --output $(Build.ArtifactStagingDirectory)/web
+              publishWebProjects: false
+              zipAfterPublish: true
+              modifyOutputPath: false
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish web artifact'
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/web'
+              artifact: 'web'
+              publishLocation: 'pipeline'
+
+  - stage: Deploy
+    displayName: Deploy to Azure App Service
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables['DeployToAppService'], 'true'))
+    jobs:
+      - deployment: DeployWebApp
+        displayName: Deploy web app
+        environment: 'ontario-csc-dev'
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: web
+
+                - task: AzureWebApp@1
+                  displayName: 'Deploy to App Service'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    appType: 'webAppLinux'
+                    appName: '$(appServiceName)'
+                    resourceGroupName: '$(appServiceResourceGroup)'
+                    package: '$(Pipeline.Workspace)/web/*.zip'
+                    runtimeStack: 'DOTNETCORE|10.0'

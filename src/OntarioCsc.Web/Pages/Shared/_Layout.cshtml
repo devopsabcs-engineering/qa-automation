@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ontario Common Service Centre</title>
+    <link rel="stylesheet" href="~/css/ontario.css" asp-append-version="true" />
+</head>
+<body>
+    <a class="ontario-skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="ontario-header" role="banner">
+        <div class="ontario-header__container">
+            <a class="ontario-header__logo" href="https://www.ontario.ca" aria-label="Government of Ontario">
+                <span class="ontario-logo-mark" aria-hidden="true">ON</span>
+                <span class="ontario-logo-text">Ontario</span>
+            </a>
+            <nav class="ontario-header__nav" aria-label="Primary navigation">
+                <ul>
+                    <li><a asp-page="/Index">Home</a></li>
+                    <li><a asp-page="/Requests/Index">Requests</a></li>
+                    <li><a asp-page="/Requests/New">New request</a></li>
+                    <li><a asp-page="/Privacy">Privacy</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="ontario-application-subheader">
+            <div class="ontario-row">
+                <div class="ontario-columns ontario-large-12">
+                    <p class="ontario-application-subheader__heading">
+                        Common Service Centre — workshop demo
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" tabindex="-1" role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="ontario-footer" role="contentinfo">
+        <div class="ontario-row">
+            <div class="ontario-columns ontario-large-12">
+                <ul class="ontario-footer__links">
+                    <li><a href="https://www.ontario.ca/page/accessibility">Accessibility</a></li>
+                    <li><a href="https://www.ontario.ca/page/privacy-statement">Privacy</a></li>
+                    <li><a href="https://www.ontario.ca/page/contact-us">Contact us</a></li>
+                </ul>
+                <p class="ontario-footer__copyright">
+                    &copy; King's Printer for Ontario, 2012&ndash;@DateTime.UtcNow.Year &mdash; workshop demo, not an official Government of Ontario service.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

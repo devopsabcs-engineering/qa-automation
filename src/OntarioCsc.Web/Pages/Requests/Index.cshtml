@@ -1,0 +1,58 @@
+@page
+@model OntarioCsc.Web.Pages.Requests.IndexModel
+@{
+    ViewData["Title"] = "Service requests";
+}
+
+<section class="ontario-section">
+    <div class="ontario-row">
+        <div class="ontario-columns ontario-large-12">
+            <h1 class="ontario-h1">Service requests</h1>
+            <p class="ontario-lead">All requests submitted through the Common Service Centre demo.</p>
+
+            <p>
+                <a class="ontario-button ontario-button--primary" asp-page="/Requests/New">
+                    Submit a new request
+                </a>
+            </p>
+
+            @if (!Model.Requests.Any())
+            {
+                <div id="no-requests" class="ontario-callout">
+                    <p>No service requests have been submitted yet.</p>
+                </div>
+            }
+            else
+            {
+                <table id="requests-table" class="ontario-table">
+                    <caption class="ontario-show-for-sr">List of submitted service requests</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Reference</th>
+                            <th scope="col">Submitted</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var request in Model.Requests)
+                        {
+                            <tr data-request-id="@request.Id">
+                                <td>CSC-@request.Id.ToString("D5")</td>
+                                <td>@request.SubmittedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>@request.FullName</td>
+                                <td>@Model.GetCategoryDisplay(request.Category)</td>
+                                <td>
+                                    <span class="ontario-badge ontario-badge--@request.Status.ToString().ToLowerInvariant()">
+                                        @request.Status
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</section>
