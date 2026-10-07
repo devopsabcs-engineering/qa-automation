@@ -1,6 +1,6 @@
 # CI for the Ontario Common Service Centre demo: build, run xUnit tests,
-# publish test results and code coverage. Mirrors the Build stage of
-# .azuredevops/pipelines/ci-cd.yml (deployment intentionally omitted).
+# Playwright UI tests, and publish test results and code coverage. Mirrors
+# the Build stage of .azuredevops/pipelines/ci-cd.yml (deployment omitted).
 
 name: CI
 
@@ -10,6 +10,7 @@ on:
     paths:
       - src/**
       - tests/**
+      - playwright-tests/**
       - .github/workflows/ci.yml
       - global.json
       - OntarioCsc.slnx
@@ -99,4 +100,65 @@ jobs:
         with:
           name: coverage-report
           path: coveragereport
+          retention-days: 14
+
+  ui-tests:
+    name: Playwright UI tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: playwright-tests
+    env:
+      E2E_CONFIGURATION: Release
+      E2E_NO_BUILD: 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install .NET SDK (from global.json)
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: '**/*.csproj'
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: playwright-tests/package-lock.json
+
+      - name: Build web app (${{ env.BUILD_CONFIGURATION }})
+        working-directory: .
+        run: dotnet build src/OntarioCsc.Web/OntarioCsc.Web.csproj --configuration "$BUILD_CONFIGURATION"
+
+      - name: Install npm packages
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # Playwright starts the app itself via the webServer block in playwright.config.ts.
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Publish Playwright test results
+        if: ${{ !cancelled() }}
+        uses: dorny/test-reporter@v2
+        with:
+          name: Playwright UI tests
+          path: playwright-tests/test-results/junit.xml
+          reporter: java-junit
+          fail-on-error: true
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-tests/playwright-report
+            playwright-tests/test-results
           retention-days: 14
