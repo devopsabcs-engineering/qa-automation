@@ -1,0 +1,35 @@
+{
+  "engine": "axe-core 4.10.3",
+  "tags": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"],
+  "viewport": "1280x800 device px (DPR 1.5)",
+  "states": {
+    "/#default": {
+      "title": "Common Service Centre — request a service - Ontario Common Service Centre",
+      "violations": [],
+      "incomplete": [
+        { "id": "color-contrast", "impact": "serious", "targets": [".ontario-eyebrow", "h1", ".ontario-lead"], "resolution": "Manual: text #333333/#1a1a1a over gradient #fff4c4 -> #ffffff; worst case 11.4:1. Pass." }
+      ]
+    },
+    "/Privacy#default": { "title": "Privacy - Ontario Common Service Centre", "violations": [], "incomplete": [] },
+    "/Requests#seeded": { "title": "Service requests - Ontario Common Service Centre", "violations": [], "incomplete": [] },
+    "/Requests/New#empty": {
+      "title": "New service request - Ontario Common Service Centre",
+      "violations": [],
+      "incomplete": [
+        { "id": "color-contrast", "impact": "serious", "targets": ["#Input_Description"], "resolution": "Manual: #1a1a1a on #ffffff = 17.4:1. Pass." }
+      ]
+    },
+    "/Requests/New#errors-client": {
+      "how": "Clicked #submit-request with empty fields (jQuery unobtrusive validation intercepts)",
+      "violations": [],
+      "incomplete": [{ "id": "color-contrast", "targets": ["#Input_Description"], "resolution": "Same as #empty. Pass." }]
+    },
+    "/Requests/New#errors-server": {
+      "how": "form.submit() bypassing client validation (simulates JS unavailable or CDN failure)",
+      "violations": [],
+      "incomplete": [{ "id": "color-contrast", "targets": ["#Input_Description"], "resolution": "Same as #empty. Pass." }]
+    },
+    "/Requests/New#submitted": { "title": "New service request - Ontario Common Service Centre", "violations": [], "incomplete": [] },
+    "/Error#default": { "title": "Error - Ontario Common Service Centre", "violations": [], "incomplete": [] }
+  }
+}

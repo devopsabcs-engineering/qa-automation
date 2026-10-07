@@ -1,0 +1,33 @@
+{
+  "keyboard": {
+    "/#default": ["Skip to main content", "Government of Ontario (logo)", "Home", "Requests", "New request", "Privacy", "Start a new request", "View existing requests", "Accessibility", "Privacy (footer)", "Contact us", "-> wraps to Skip link"],
+    "/Requests#seeded": ["Skip to main content", "Government of Ontario (logo)", "Home", "Requests", "New request", "Privacy", "Submit a new request", "Accessibility", "Privacy (footer)", "Contact us"],
+    "/Requests/New#empty": ["Government of Ontario (logo)", "Home", "Requests", "New request", "Privacy", "Input_FullName", "Input_Email", "Input_Category", "Input_Description", "submit-request", "Cancel", "Accessibility", "Privacy (footer)", "Contact us", "Skip to main content"],
+    "result": "All interactive elements reachable, order follows DOM and visual order, no traps."
+  },
+  "focusVisible": {
+    "links_buttons": "UA default outline (auto) retained on all links and buttons. Pass.",
+    "logo_link": { "state": "focus and hover", "textColor": "rgb(0, 71, 143)", "background": "rgb(26, 26, 26)", "ratio": 1.90, "required": 3.0, "screenshot": "focus-logo.png" },
+    "form_controls": { "outline": "solid 2.67px #ffd027 offset 2px on #ffffff", "outlineRatio": 1.47, "borderChange": "#333333 -> #0066cc", "borderChangeRatio": 2.27, "required": 3.0, "screenshot": "focus-input.png" }
+  },
+  "skipLink": { "firstTab": "Skip to main content", "afterEnter": "#main-content focused", "result": "Pass" },
+  "reflow320": {
+    "method": "viewport 480 device px at DPR 1.5 = innerWidth 320 CSS px",
+    "/": { "scrollWidth": 310, "result": "Pass" },
+    "/Privacy": { "scrollWidth": 310, "result": "Pass" },
+    "/Requests": { "scrollWidth": 663, "tableWidth": 636, "h1Right": 663, "leadRight": 663, "result": "Fail: table widens the whole page", "screenshot": "reflow-requests-320.png" },
+    "/Requests/New": { "scrollWidth": 310, "result": "Pass" },
+    "/Error": { "scrollWidth": 367, "codeRight": 367, "result": "Fail: request ID <code> does not wrap" }
+  },
+  "textSpacing": { "result": "No clipped or overflowing text on any state. Pass." },
+  "targetSize": { "result": "All standalone targets >= 24x24 (smallest: footer links 62x27). Skip link is 1x1 only while hidden. Pass." },
+  "formErrors": {
+    "client": { "focusMovesTo": "Input_FullName", "ariaDescribedby": "set by jquery-validation-unobtrusive (Input_X-error)", "ariaInvalid": null, "titleChanged": false, "summary": null },
+    "server": { "focusMovesTo": "BODY", "ariaDescribedby": null, "ariaInvalid": null, "titleChanged": false, "summary": "asp-validation-summary=ModelOnly renders nothing for field errors", "visualCue": "input-validation-error class (red border, pink background) plus inline text" },
+    "required": { "visibleIndicator": false, "requiredAttr": false, "ariaRequired": false }
+  },
+  "submitted": { "title": "New service request - Ontario Common Service Centre (unchanged)", "focus": "BODY", "confirmationRole": null },
+  "navigationState": { "ariaCurrent": "missing on all 4 pages with a matching nav link" },
+  "titlesHeadings": { "result": "Unique titles per page, exactly one h1 per state, no skipped levels. Pass." },
+  "reducedMotion": { "result": "Only 0.15s colour transitions on buttons; no motion. Not applicable." }
+}

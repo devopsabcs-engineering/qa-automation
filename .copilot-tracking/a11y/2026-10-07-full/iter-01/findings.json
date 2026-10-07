@@ -1,0 +1,274 @@
+{
+  "schemaVersion": "1.0",
+  "run": "2026-10-07-full",
+  "iteration": 1,
+  "generatedAt": "2026-10-07T15:10:00Z",
+  "target": {
+    "baseUrl": "http://localhost:5158",
+    "states": ["/#default", "/Privacy#default", "/Requests#seeded", "/Requests/New#empty", "/Requests/New#errors-client", "/Requests/New#errors-server", "/Requests/New#submitted", "/Error#default"]
+  },
+  "engines": [
+    { "name": "static", "version": "1.0" },
+    { "name": "axe-core", "version": "4.10.3", "tags": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] },
+    { "name": "interaction", "checks": ["keyboard", "focus-visible", "skip-link", "reflow", "text-spacing", "target-size", "form-errors", "navigation-state", "titles-headings", "reduced-motion"] }
+  ],
+  "summary": {
+    "score": 62,
+    "grade": "D",
+    "verdict": "FAIL",
+    "open": { "critical": 0, "serious": 3, "moderate": 5, "minor": 2 },
+    "delta": { "fixed": 0, "new": 10, "persisting": 0, "regressed": 0 },
+    "needsHuman": 0,
+    "needsReview": 1
+  },
+  "findings": [
+    {
+      "id": "A11Y-001",
+      "fingerprint": "color-contrast-state|src/OntarioCsc.Web/wwwroot/css/ontario.css|.ontario-header__logo",
+      "status": "new",
+      "attempts": 0,
+      "severity": "serious",
+      "rule": "color-contrast-state",
+      "wcag": [{ "sc": "1.4.3", "name": "Contrast (Minimum)", "level": "AA" }],
+      "principle": "Perceivable",
+      "detectedBy": ["interaction:focus-visible", "static"],
+      "location": {
+        "file": "src/OntarioCsc.Web/wwwroot/css/ontario.css",
+        "line": 64,
+        "selector": ".ontario-header__logo .ontario-logo-text",
+        "states": ["/#default", "/Privacy#default", "/Requests#seeded", "/Requests/New#empty", "/Error#default"]
+      },
+      "evidence": "Generic `a:hover, a:focus { color: #00478f }` (0,1,1) overrides `.ontario-header__logo { color: white }` (0,1,0). Focused/hovered logo text 'Ontario' (27px bold) renders rgb(0,71,143) on rgb(26,26,26): 1.90:1, needs 3:1.",
+      "userImpact": "Keyboard and mouse users lose the site name the moment they focus or hover the logo; low-vision users cannot read it.",
+      "fix": "Add a scoped `.ontario-header__logo:hover, .ontario-header__logo:focus { color: var(--ontario-colour-white); }` (or yellow) so header link states keep >= 3:1 on black.",
+      "autoFixable": true,
+      "notes": "Screenshot: evidence/focus-logo.png"
+    },
+    {
+      "id": "A11Y-002",
+      "fingerprint": "reflow|src/OntarioCsc.Web/Pages/Requests/Index.cshtml|#requests-table",
+      "status": "new",
+      "attempts": 0,
+      "severity": "serious",
+      "rule": "reflow",
+      "wcag": [{ "sc": "1.4.10", "name": "Reflow", "level": "AA" }],
+      "principle": "Perceivable",
+      "detectedBy": ["interaction:reflow"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Requests/Index.cshtml",
+        "line": 27,
+        "selector": "#requests-table",
+        "states": ["/Requests#seeded"]
+      },
+      "evidence": "At 320 CSS px the 636px table is not in a scroll container, so the column, h1, lead paragraph, and header all stretch to 663px (documentElement.scrollWidth 663).",
+      "userImpact": "Users zoomed to 400% must scroll horizontally to read every line of text on the page, not just the table.",
+      "fix": "Wrap the table in `<div role=\"region\" aria-labelledby=\"requests-caption\" tabindex=\"0\">` with `overflow-x: auto` (new CSS class in ontario.css); give the caption `id=\"requests-caption\"`. Keep `id=\"requests-table\"`.",
+      "autoFixable": true,
+      "notes": "Screenshot: evidence/reflow-requests-320.png"
+    },
+    {
+      "id": "A11Y-003",
+      "fingerprint": "aria-describedby-error|src/OntarioCsc.Web/Pages/Requests/New.cshtml|Input.*",
+      "status": "new",
+      "attempts": 0,
+      "severity": "serious",
+      "rule": "aria-describedby-error",
+      "wcag": [
+        { "sc": "1.3.1", "name": "Info and Relationships", "level": "A" },
+        { "sc": "3.3.1", "name": "Error Identification", "level": "A" }
+      ],
+      "principle": "Understandable",
+      "detectedBy": ["interaction:form-errors", "static"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Requests/New.cshtml",
+        "line": 35,
+        "selector": "#Input_FullName, #Input_Email, #Input_Category, #Input_Description",
+        "states": ["/Requests/New#errors-server"]
+      },
+      "evidence": "After a server-side validation failure all four controls have no aria-describedby and the asp-validation-for spans have no id. The client path is fine only because jquery-validation-unobtrusive injects aria-describedby at runtime.",
+      "userImpact": "When JavaScript is off or the CDN scripts fail, screen reader users hear 'Full name, edit text' with no error, even though the page shows one.",
+      "fix": "Apply the `aria-describedby-error` pattern: give each validation span `id=\"Input_X-error\"` and set `aria-describedby` on the control (lines 35, 41, 47, 55).",
+      "autoFixable": true,
+      "notes": ""
+    },
+    {
+      "id": "A11Y-004",
+      "fingerprint": "aria-invalid|src/OntarioCsc.Web/Pages/Requests/New.cshtml|Input.*",
+      "status": "new",
+      "attempts": 0,
+      "severity": "moderate",
+      "rule": "aria-invalid",
+      "wcag": [{ "sc": "3.3.1", "name": "Error Identification", "level": "A" }],
+      "principle": "Understandable",
+      "detectedBy": ["interaction:form-errors"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Requests/New.cshtml",
+        "line": 35,
+        "selector": "#Input_FullName, #Input_Email, #Input_Category, #Input_Description",
+        "states": ["/Requests/New#errors-client", "/Requests/New#errors-server"]
+      },
+      "evidence": "aria-invalid is null on every invalid control in both the client and server error paths; invalid state is conveyed only by the red border and pink background of `.input-validation-error`.",
+      "userImpact": "Screen readers do not announce 'invalid entry' when users move through the fields.",
+      "fix": "Server: `aria-invalid=\"@(invalid ? \"true\" : null)\"` from ModelState per the pattern catalog. Client: set and clear aria-invalid in jQuery Validate `highlight`/`unhighlight`.",
+      "autoFixable": true,
+      "notes": ""
+    },
+    {
+      "id": "A11Y-005",
+      "fingerprint": "error-summary|src/OntarioCsc.Web/Pages/Requests/New.cshtml|#new-request-form",
+      "status": "new",
+      "attempts": 0,
+      "severity": "moderate",
+      "rule": "error-summary",
+      "wcag": [{ "sc": "3.3.1", "name": "Error Identification", "level": "A" }],
+      "principle": "Understandable",
+      "detectedBy": ["interaction:form-errors", "static"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Requests/New.cshtml",
+        "line": 31,
+        "selector": ".ontario-error-summary",
+        "states": ["/Requests/New#errors-server"]
+      },
+      "evidence": "After a failed server-side POST: focus lands on BODY, the title stays 'New service request - Ontario Common Service Centre', and `asp-validation-summary=\"ModelOnly\"` renders nothing for field errors.",
+      "userImpact": "Screen reader users hear the same page title as before and are not told the submission failed or how many fields need attention.",
+      "fix": "Apply the `error-summary` pattern (linked list of errors, tabindex=-1, focused on load) and the `document-title` pattern ('Error: ' prefix when ModelState is invalid).",
+      "autoFixable": true,
+      "notes": ""
+    },
+    {
+      "id": "A11Y-006",
+      "fingerprint": "required-fields|src/OntarioCsc.Web/Pages/Requests/New.cshtml|Input.*",
+      "status": "new",
+      "attempts": 0,
+      "severity": "moderate",
+      "rule": "required-fields",
+      "wcag": [{ "sc": "3.3.2", "name": "Labels or Instructions", "level": "A" }],
+      "principle": "Understandable",
+      "detectedBy": ["static", "interaction:form-errors"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Requests/New.cshtml",
+        "line": 34,
+        "selector": "label.ontario-label",
+        "states": ["/Requests/New#empty"]
+      },
+      "evidence": "All four fields are [Required] on the model, but no label, instruction, `required`, or `aria-required` tells users so before they submit.",
+      "userImpact": "Users only learn fields are mandatory after a failed submission.",
+      "fix": "Add '(required)' to each label per the ODS flag convention (or one 'All fields are required.' instruction above the form) and `aria-required=\"true\"` on each control.",
+      "autoFixable": true,
+      "notes": "Wording follows the catalog's `required-fields` pattern; flag for content review."
+    },
+    {
+      "id": "A11Y-007",
+      "fingerprint": "focus-appearance|src/OntarioCsc.Web/wwwroot/css/ontario.css|.ontario-input:focus",
+      "status": "new",
+      "attempts": 0,
+      "severity": "moderate",
+      "rule": "focus-appearance",
+      "wcag": [
+        { "sc": "1.4.11", "name": "Non-text Contrast", "level": "AA" },
+        { "sc": "2.4.7", "name": "Focus Visible", "level": "AA" }
+      ],
+      "principle": "Perceivable",
+      "detectedBy": ["interaction:focus-visible", "static"],
+      "location": {
+        "file": "src/OntarioCsc.Web/wwwroot/css/ontario.css",
+        "line": 340,
+        "selector": ".ontario-input:focus, .ontario-select:focus, .ontario-textarea:focus",
+        "states": ["/Requests/New#empty", "/Requests/New#errors-client", "/Requests/New#errors-server"]
+      },
+      "evidence": "Focus ring is a 2.67px #ffd027 outline on white (1.47:1); the accompanying border change #333333 -> #0066cc differs by only 2.27:1. Neither cue reaches 3:1.",
+      "userImpact": "Low-vision keyboard users struggle to see which form field has focus.",
+      "fix": "Use the catalog `focus-visible` pattern: dark 3px ring (`--ontario-colour-black`) with the yellow kept as an outer halo.",
+      "autoFixable": true,
+      "notes": "Keeps the ODS yellow as a halo, so no new brand colour is introduced. Screenshot: evidence/focus-input.png"
+    },
+    {
+      "id": "A11Y-008",
+      "fingerprint": "reflow|src/OntarioCsc.Web/Pages/Error.cshtml|code",
+      "status": "new",
+      "attempts": 0,
+      "severity": "moderate",
+      "rule": "reflow",
+      "wcag": [{ "sc": "1.4.10", "name": "Reflow", "level": "AA" }],
+      "principle": "Perceivable",
+      "detectedBy": ["interaction:reflow"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Error.cshtml",
+        "line": 13,
+        "selector": "code",
+        "states": ["/Error#default"]
+      },
+      "evidence": "At 320 CSS px the unbroken request ID in `<code>` extends to 367px (scrollWidth 367).",
+      "userImpact": "Zoomed users must scroll sideways to read the request ID they need to quote to support.",
+      "fix": "Add `code { overflow-wrap: anywhere; }` to ontario.css.",
+      "autoFixable": true,
+      "notes": ""
+    },
+    {
+      "id": "A11Y-009",
+      "fingerprint": "aria-current-page|src/OntarioCsc.Web/Pages/Shared/_Layout.cshtml|.ontario-header__nav a",
+      "status": "new",
+      "attempts": 0,
+      "severity": "minor",
+      "rule": "aria-current-page",
+      "wcag": [{ "sc": "1.3.1", "name": "Info and Relationships", "level": "best-practice" }],
+      "principle": "Robust",
+      "detectedBy": ["interaction:navigation-state", "static"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Shared/_Layout.cshtml",
+        "line": 20,
+        "selector": ".ontario-header__nav a",
+        "states": ["/#default", "/Privacy#default", "/Requests#seeded", "/Requests/New#empty"]
+      },
+      "evidence": "The nav link matching the current page has no aria-current and no visual current-page style on any page.",
+      "userImpact": "Screen reader and sighted users cannot tell which section they are in from the navigation.",
+      "fix": "Apply the `aria-current-page` pattern in _Layout.cshtml (lines 20-23).",
+      "autoFixable": true,
+      "notes": ""
+    },
+    {
+      "id": "A11Y-010",
+      "fingerprint": "status-message|src/OntarioCsc.Web/Pages/Requests/New.cshtml|#submission-confirmation",
+      "status": "new",
+      "attempts": 0,
+      "severity": "minor",
+      "rule": "status-message",
+      "wcag": [{ "sc": "2.4.2", "name": "Page Titled", "level": "best-practice" }],
+      "principle": "Operable",
+      "detectedBy": ["interaction:titles-headings"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Requests/New.cshtml",
+        "line": 15,
+        "selector": "#submission-confirmation",
+        "states": ["/Requests/New#submitted"]
+      },
+      "evidence": "After a successful submit the title is still 'New service request - Ontario Common Service Centre' and focus is on BODY.",
+      "userImpact": "Screen reader users are not told the request succeeded and must search for the reference number.",
+      "fix": "Apply the `status-message` pattern: title 'Request submitted', heading with tabindex=-1 focused on load.",
+      "autoFixable": true,
+      "notes": ""
+    },
+    {
+      "id": "A11Y-011",
+      "fingerprint": "identical-links-same-purpose|src/OntarioCsc.Web/Pages/Shared/_Layout.cshtml|Privacy",
+      "status": "needs-review",
+      "attempts": 0,
+      "severity": "minor",
+      "rule": "identical-links-same-purpose",
+      "wcag": [{ "sc": "2.4.4", "name": "Link Purpose (In Context)", "level": "A" }],
+      "principle": "Operable",
+      "detectedBy": ["static"],
+      "location": {
+        "file": "src/OntarioCsc.Web/Pages/Shared/_Layout.cshtml",
+        "line": 47,
+        "selector": ".ontario-footer__links a[href*=privacy]",
+        "states": ["/#default", "/Privacy#default", "/Requests#seeded", "/Requests/New#empty", "/Error#default"]
+      },
+      "evidence": "Two links named 'Privacy' go to different destinations: nav -> /Privacy (demo notice, line 23); footer -> ontario.ca privacy statement (line 47).",
+      "userImpact": "In a screen reader links list both read 'Privacy' with no way to tell them apart.",
+      "fix": "Content decision: rename one link, e.g. footer 'Ontario.ca privacy statement' or nav 'Demo privacy notice'.",
+      "autoFixable": false,
+      "notes": "Landmark context (navigation vs contentinfo) may satisfy 2.4.4 'in context'; a human should pick the wording."
+    }
+  ]
+}
