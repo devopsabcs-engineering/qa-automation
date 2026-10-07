@@ -4,6 +4,8 @@
 # Stage 1: Build the ASP.NET Core 10 solution.
 # Stage 2: Run xUnit tests, publish results to the ADO "Tests" tab,
 #          and publish code coverage to the "Code Coverage" tab.
+#          In parallel, run the Playwright UI tests and publish their
+#          JUnit results to the same "Tests" tab.
 # Stage 3: Publish the web app as a build artifact.
 # Stage 4: Provision the App Service via Bicep (idempotent) and deploy
 #          the published artifact to it.
@@ -15,10 +17,8 @@
 #      resource group (or subscription).
 #
 # When unit tests run via `dotnet test`, .trx results are produced and
-# automatically picked up by the DotNetCoreCLI@2 task. Once a Playwright
-# project is added (see README.md), append a PublishTestResults@2 step
-# pointing at its JUnit XML output to surface those results in the same
-# Tests tab.
+# automatically picked up by the DotNetCoreCLI@2 task. Playwright JUnit
+# XML is published with PublishTestResults@2 into the same Tests tab.
 # =====================================================================
 
 trigger:
@@ -29,6 +29,7 @@ trigger:
     include:
       - src/**
       - tests/**
+      - playwright-tests/**
       - infra/**
       - .azuredevops/pipelines/ci-cd.yml
       - global.json
@@ -124,6 +125,73 @@ stages:
             inputs:
               targetPath: '$(Build.SourcesDirectory)/infra'
               artifact: 'infra'
+              publishLocation: 'pipeline'
+
+      - job: UITests
+        displayName: Playwright UI tests
+        timeoutInMinutes: 20
+        pool:
+          vmImage: 'ubuntu-latest'
+        variables:
+          # Azure Pipelines does not set CI; playwright.config.ts uses it for retries/workers/forbidOnly.
+          CI: 'true'
+          E2E_CONFIGURATION: '$(buildConfiguration)'
+          E2E_NO_BUILD: 'true'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK $(dotnetSdkVersion)'
+            inputs:
+              packageType: 'sdk'
+              version: '$(dotnetSdkVersion)'
+
+          - task: UseNode@1
+            displayName: 'Install Node.js 22'
+            inputs:
+              version: '22.x'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build web app ($(buildConfiguration))'
+            inputs:
+              command: 'build'
+              projects: '$(webProject)'
+              arguments: '--configuration $(buildConfiguration)'
+
+          - script: npm ci
+            displayName: 'Install npm packages'
+            workingDirectory: playwright-tests
+
+          - script: npx playwright install --with-deps chromium
+            displayName: 'Install Playwright browsers'
+            workingDirectory: playwright-tests
+
+          # Playwright starts the app itself via the webServer block in playwright.config.ts.
+          - script: npx playwright test
+            displayName: 'Run Playwright tests'
+            workingDirectory: playwright-tests
+
+          - task: PublishTestResults@2
+            displayName: 'Publish Playwright test results'
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: 'playwright-tests/test-results/junit.xml'
+              testRunTitle: 'Playwright UI tests'
+              failTaskOnFailedTests: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Upload Playwright HTML report'
+            condition: succeededOrFailed()
+            inputs:
+              targetPath: 'playwright-tests/playwright-report'
+              artifact: 'playwright-report-$(System.JobAttempt)'
+              publishLocation: 'pipeline'
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Upload Playwright test results'
+            condition: succeededOrFailed()
+            inputs:
+              targetPath: 'playwright-tests/test-results'
+              artifact: 'playwright-test-results-$(System.JobAttempt)'
               publishLocation: 'pipeline'
 
   - stage: Deploy
