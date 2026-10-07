@@ -1,5 +1,5 @@
 ---
-description: "Required workflow for Azure DevOps work item tracking, Git branching, pull requests, branch cleanup, and QA test coverage in the Playwright101 project."
+description: "Required workflow for Azure DevOps work item tracking, Git branching, pull requests, branch cleanup, and QA test coverage in the OnSIS project."
 applyTo: "**"
 maturity: stable
 ---
@@ -9,7 +9,7 @@ maturity: stable
 ## ADO Organization and Project
 
 * Organization: `MngEnvMCAP675646`
-* Project: `Playwright101`
+* Project: `OnSIS`
 
 All work items, boards, and test plans live in this project.
 
