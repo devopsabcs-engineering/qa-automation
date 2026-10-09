@@ -1,8 +1,14 @@
-# CI for the Ontario Common Service Centre demo: build, run xUnit tests,
-# Playwright UI tests, and publish test results and code coverage. Mirrors
-# the Build stage of .azuredevops/pipelines/ci-cd.yml (deployment omitted).
+# GitHub Actions equivalent of .azuredevops/pipelines/ci-cd.yml.
+#
+# Azure deployment prerequisites:
+#   1. Configure a federated credential for this repository/environment on a
+#      Microsoft Entra application or user-assigned managed identity.
+#   2. Add AZURE_CLIENT_ID, AZURE_TENANT_ID, and AZURE_SUBSCRIPTION_ID as
+#      GitHub environment secrets for the ontario-csc-dev environment.
+#   3. Grant the federated identity Contributor at the target resource group
+#      or subscription scope.
 
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -11,7 +17,8 @@ on:
       - src/**
       - tests/**
       - playwright-tests/**
-      - .github/workflows/ci.yml
+      - infra/**
+      - .github/workflows/ci-cd.yml
       - global.json
       - OntarioCsc.slnx
   pull_request:
@@ -20,8 +27,6 @@ on:
 
 permissions:
   contents: read
-  actions: read
-  checks: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,8 +35,12 @@ concurrency:
 env:
   BUILD_CONFIGURATION: Release
   SOLUTION: OntarioCsc.slnx
+  WEB_PROJECT: src/OntarioCsc.Web/OntarioCsc.Web.csproj
   TEST_PROJECT: tests/OntarioCsc.Web.Tests/OntarioCsc.Web.Tests.csproj
   TEST_RESULTS_DIR: ${{ github.workspace }}/TestResults
+  AZURE_LOCATION: canadacentral
+  APP_SERVICE_NAME: app-ontario-csc-dev-cac
+  APP_SERVICE_RESOURCE_GROUP: rg-ontario-csc-dev-cac
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
@@ -39,6 +48,9 @@ jobs:
   build-and-test:
     name: Build solution and run tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -86,6 +98,33 @@ jobs:
         if: ${{ !cancelled() }}
         run: cat coveragereport/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Publish web app
+        run: >-
+          dotnet publish "$WEB_PROJECT"
+          --configuration "$BUILD_CONFIGURATION"
+          --no-build
+          --output "$RUNNER_TEMP/web-publish"
+
+      - name: Package web app
+        working-directory: ${{ runner.temp }}/web-publish
+        run: zip -r "$RUNNER_TEMP/OntarioCsc.Web.zip" .
+
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: ${{ runner.temp }}/OntarioCsc.Web.zip
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload infra artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: infra
+          path: infra
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Upload test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
@@ -106,6 +145,9 @@ jobs:
     name: Playwright UI tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      checks: write
     defaults:
       run:
         working-directory: playwright-tests
@@ -132,7 +174,7 @@ jobs:
 
       - name: Build web app (${{ env.BUILD_CONFIGURATION }})
         working-directory: .
-        run: dotnet build src/OntarioCsc.Web/OntarioCsc.Web.csproj --configuration "$BUILD_CONFIGURATION"
+        run: dotnet build "$WEB_PROJECT" --configuration "$BUILD_CONFIGURATION"
 
       - name: Install npm packages
         run: npm ci
@@ -140,7 +182,6 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      # Playwright starts the app itself via the webServer block in playwright.config.ts.
       - name: Run Playwright tests
         run: npx playwright test
 
@@ -162,3 +203,67 @@ jobs:
             playwright-tests/playwright-report
             playwright-tests/test-results
           retention-days: 14
+
+  deploy:
+    name: Provision infrastructure and deploy web app
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      github.event_name == 'workflow_dispatch'
+    needs:
+      - build-and-test
+      - ui-tests
+    runs-on: ubuntu-latest
+    environment:
+      name: ontario-csc-dev
+      url: ${{ steps.deploy.outputs.webapp-url }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download web artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: deployment/web
+
+      - name: Download infra artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: infra
+          path: deployment/infra
+
+      - name: Log in to Azure with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Ensure resource group exists
+        run: >-
+          az group create
+          --name "$APP_SERVICE_RESOURCE_GROUP"
+          --location "$AZURE_LOCATION"
+          --output none
+
+      - name: Preview Bicep deployment
+        run: >-
+          az deployment group what-if
+          --resource-group "$APP_SERVICE_RESOURCE_GROUP"
+          --template-file deployment/infra/main.bicep
+          --parameters appServiceName="$APP_SERVICE_NAME" location="$AZURE_LOCATION"
+
+      - name: Provision App Service via Bicep
+        run: >-
+          az deployment group create
+          --resource-group "$APP_SERVICE_RESOURCE_GROUP"
+          --template-file deployment/infra/main.bicep
+          --parameters appServiceName="$APP_SERVICE_NAME" location="$AZURE_LOCATION"
+          --output none
+
+      - name: Deploy to App Service
+        id: deploy
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.APP_SERVICE_NAME }}
+          package: deployment/web/OntarioCsc.Web.zip
