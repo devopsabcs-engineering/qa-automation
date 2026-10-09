@@ -1,0 +1,7 @@
+{
+  "generatedAt": "2026-10-09T18:34:53Z",
+  "scope": ["src/OntarioCsc.Web/Pages/**/*.cshtml", "src/OntarioCsc.Web/wwwroot/css/*.css"],
+  "confirmedFindings": ["A11Y-001", "A11Y-003", "A11Y-005", "A11Y-006", "A11Y-007", "A11Y-009", "A11Y-011", "A11Y-012"],
+  "cleanChecks": ["image-alt", "non-interactive-click", "positive-tabindex", "zoom-blocked", "missing-page-title", "bound-label", "placeholder-label", "autocomplete", "table-caption", "table-header-scope", "ambiguous-link-text", "heading-order", "outline-removed"],
+  "notes": ["Tag helpers provide matching label/control IDs.", "Every page has one h1 and no skipped heading level.", "The only transition has no prefers-reduced-motion override."]
+}

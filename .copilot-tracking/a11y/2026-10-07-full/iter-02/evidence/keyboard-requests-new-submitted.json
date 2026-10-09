@@ -1,0 +1,11 @@
+{
+  "route": "/Requests/New",
+  "state": "submitted",
+  "method": "Native focusable DOM order enumerated; integrated browser synthetic Tab did not move focus",
+  "order": ["Skip to main content", "Government of Ontario", "Home", "Requests", "New request", "Privacy", "View all requests", "Accessibility", "Privacy", "Contact us"],
+  "trap": false,
+  "unreachableControl": false,
+  "skipLink": { "activated": true, "activeElement": "#main-content" },
+  "focusObscured": false,
+  "confirmation": { "present": true, "focused": false, "title": "New service request - Ontario Common Service Centre" }
+}

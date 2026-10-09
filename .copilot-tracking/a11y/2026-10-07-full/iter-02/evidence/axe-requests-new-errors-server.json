@@ -1,0 +1,15 @@
+{
+  "engine": { "name": "axe-core", "version": "4.10.3" },
+  "route": "/Requests/New",
+  "state": "errors-server",
+  "title": "New service request - Ontario Common Service Centre",
+  "violations": [],
+  "incomplete": [{
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "targets": ["#Input_Description"],
+    "reason": "Background color could not be determined because the textarea was partially obscured",
+    "resolution": "Manual token calculation confirms error red at 5.84:1 and black entered text at 17.4:1."
+  }]
+}

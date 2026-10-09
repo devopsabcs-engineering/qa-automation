@@ -1,0 +1,11 @@
+{
+  "route": "/Requests/New",
+  "state": "empty",
+  "method": "Native focusable DOM order enumerated; integrated browser synthetic Tab did not move focus",
+  "order": ["Skip to main content", "Government of Ontario", "Home", "Requests", "New request", "Privacy", "Full name", "Email address", "Service category", "Describe your request", "Submit request", "Cancel", "Accessibility", "Privacy", "Contact us"],
+  "trap": false,
+  "unreachableControl": false,
+  "skipLink": { "activated": true, "activeElement": "#main-content" },
+  "focusObscured": false,
+  "inputFocus": { "outline": "2.67px solid rgb(255,208,39)", "boxShadow": "none", "result": "fail-contrast" }
+}

@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-09T18:34:53Z",
+  "viewport": { "desktop": "1280x720", "reflow": "320x640" },
+  "checks": {
+    "focusOrder": { "result": "pass-with-limitation", "note": "Integrated browser synthetic Tab did not advance focus; native DOM order was enumerated and each control was directly focused." },
+    "skipLink": { "result": "pass", "activeElement": "#main-content" },
+    "focusVisible": { "result": "fail", "inputOutline": "2.67px solid rgb(255,208,39)", "boxShadow": "none", "contrastOnWhite": "1.47:1" },
+    "focusNotObscured": { "result": "pass", "fixedOrStickyObstruction": false },
+    "reflow": { "result": "fail", "widths": { "home": 264, "privacy": 203, "requests": 695, "new": 203, "error": 367 } },
+    "textSpacing": { "result": "pass", "clippedContent": [], "excludedTechniques": [".ontario-skip-link", ".ontario-show-for-sr"] },
+    "targetSize": { "result": "pass", "note": "All visible standalone targets are at least 24x24 CSS pixels; inline links are exempt." },
+    "formErrors": { "result": "fail", "clientAriaInvalid": null, "serverAriaInvalid": null, "serverAriaDescribedby": null, "serverSummary": "", "serverTitle": "New service request - Ontario Common Service Centre" },
+    "navigationState": { "result": "fail", "ariaCurrentPageCount": 0 },
+    "titlesHeadings": { "result": "pass-with-advisory", "oneH1PerState": true, "skippedHeadingLevels": false, "submittedTitleUpdated": false },
+    "reducedMotion": { "result": "advisory-fail", "transitionDuration": "0.15s, 0.15s, 0.15s" }
+  }
+}

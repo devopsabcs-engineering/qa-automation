@@ -1,0 +1,15 @@
+{
+  "engine": { "name": "axe-core", "version": "4.10.3" },
+  "route": "/",
+  "state": "default",
+  "title": "Common Service Centre — request a service - Ontario Common Service Centre",
+  "violations": [],
+  "incomplete": [{
+    "id": "color-contrast",
+    "impact": "serious",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "targets": [".ontario-eyebrow", "h1", ".ontario-lead"],
+    "reason": "Background color could not be determined due to a background gradient",
+    "resolution": "Manual token calculation confirms at least 11.4:1 against the lightest gradient color."
+  }]
+}

@@ -1,0 +1,10 @@
+{
+  "route": "/Error",
+  "state": "default",
+  "method": "Native focusable DOM order enumerated; integrated browser synthetic Tab did not move focus",
+  "order": ["Skip to main content", "Government of Ontario", "Home", "Requests", "New request", "Privacy", "Accessibility", "Privacy", "Contact us"],
+  "trap": false,
+  "unreachableControl": false,
+  "skipLink": { "activated": true, "activeElement": "#main-content" },
+  "focusObscured": false
+}
