@@ -1,0 +1,8 @@
+{
+  "method": "native-dom-order-fallback",
+  "physicalTabSupported": false,
+  "note": "Synthetic Tab presses remained on body; order was derived from rendered native focusability and checked for positive tabindex, traps, and unreachable controls.",
+  "order": ["Skip to main content", "Government of Ontario", "Home", "Requests", "New request", "Privacy", "View all requests", "Accessibility", "Privacy", "Contact us"],
+  "activeAfterSubmission": "submission-confirmation-heading",
+  "result": "pass"
+}

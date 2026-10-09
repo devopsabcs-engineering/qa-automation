@@ -1,0 +1,18 @@
+{
+  "engine": { "name": "axe-core", "version": "4.10.3" },
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "aria-prohibited-attr",
+      "impact": "serious",
+      "help": "Elements must only use permitted ARIA attributes",
+      "targets": ["#error-summary"]
+    },
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "targets": ["#Input_Description"]
+    }
+  ]
+}

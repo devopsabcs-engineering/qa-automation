@@ -1,0 +1,31 @@
+{
+  "viewport": { "cssWidth": 320, "documentWidth": 310 },
+  "states": [
+    { "state": "/#default", "h1": 1, "current": "Home", "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 },
+    { "state": "/Privacy#default", "h1": 1, "current": "Privacy", "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 },
+    { "state": "/Requests#seeded", "h1": 1, "current": "Requests", "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 },
+    { "state": "/Requests/New#empty", "h1": 1, "current": "New request", "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 },
+    { "state": "/Requests/New#errors-client", "h1": 1, "current": "New request", "active": "Input_FullName", "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 },
+    { "state": "/Requests/New#errors-server", "h1": 1, "current": "New request", "active": "error-summary", "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 },
+    { "state": "/Requests/New#submitted", "h1": 1, "current": "New request", "active": "submission-confirmation-heading", "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 },
+    { "state": "/Error#default", "h1": 1, "current": null, "overflow": false, "undersizedTargets": 0, "duplicateIds": 0 }
+  ],
+  "skipLink": { "activatedTarget": "main-content", "result": "pass" },
+  "focusAppearance": { "selector": ".ontario-input:focus", "rule": "3px dark outline with 6px yellow halo", "manualSourceConfirmation": true, "result": "pass" },
+  "formErrors": {
+    "title": "Error: New service request - Ontario Common Service Centre",
+    "active": "error-summary",
+    "summaryLinkCount": 4,
+    "controls": 4,
+    "allRequired": true,
+    "allAriaInvalid": true,
+    "allDescribedByError": true,
+    "result": "pass"
+  },
+  "reducedMotion": { "transitionDuration": "0.00001s", "animationDuration": "0.00001s", "result": "pass" },
+  "textSpacing": { "statesChecked": 8, "horizontalOverflow": 0, "contentClipping": 0, "overlaps": 0, "note": "The intentionally off-screen skip link remained clipped until focus and is exempt.", "result": "pass" },
+  "axeIncompleteReview": [
+    { "rule": "color-contrast", "targets": [".ontario-eyebrow", "h1", ".ontario-lead", "#Input_Description"], "resolution": "manual-pass", "evidence": "Dark #333333/#1a1a1a text is rendered over #fff4c4-to-white or white backgrounds; minimum contrast exceeds 4.5:1. Axe reported gradient/partial-obscuration uncertainty." },
+    { "rule": "aria-prohibited-attr", "target": "#error-summary", "resolution": "manual-pass-current-browser", "evidence": "Chromium accessibility snapshot exposes a focused generic named 'There is a problem'; axe classified this as incomplete, not a violation, because support for aria-labelledby on a roleless div varies." }
+  ]
+}

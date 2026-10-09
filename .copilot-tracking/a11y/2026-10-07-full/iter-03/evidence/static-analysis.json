@@ -1,0 +1,36 @@
+{
+  "engine": "static",
+  "version": "1.0",
+  "generatedAt": "2026-10-09T00:00:00Z",
+  "scope": [
+    "src/OntarioCsc.Web/Pages/**/*.cshtml",
+    "src/OntarioCsc.Web/wwwroot/css/*.css"
+  ],
+  "checks": {
+    "image-alt": "pass",
+    "non-interactive-click": "pass",
+    "positive-tabindex": "pass",
+    "zoom-blocked": "pass",
+    "page-title": "pass",
+    "control-label": "pass",
+    "placeholder-label": "pass",
+    "error-association": "pass",
+    "autocomplete": "pass",
+    "table-semantics": "pass",
+    "ambiguous-link-text": "pass",
+    "heading-order": "pass",
+    "focus-removed": "pass",
+    "focus-indicator": "pass",
+    "text-contrast": "pass",
+    "reduced-motion": "pass"
+  },
+  "violations": [],
+  "needsReview": [
+    {
+      "id": "A11Y-011",
+      "rule": "identical-links-same-purpose",
+      "location": "src/OntarioCsc.Web/Pages/Shared/_Layout.cshtml",
+      "evidence": "Primary navigation and footer still expose links named Privacy to different destinations; resolver correctly deferred the content decision."
+    }
+  ]
+}
