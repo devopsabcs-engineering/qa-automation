@@ -24,34 +24,36 @@
             }
             else
             {
-                <table id="requests-table" class="ontario-table">
-                    <caption class="ontario-show-for-sr">List of submitted service requests</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">Reference</th>
-                            <th scope="col">Submitted</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var request in Model.Requests)
-                        {
-                            <tr data-request-id="@request.Id">
-                                <td>CSC-@request.Id.ToString("D5")</td>
-                                <td>@request.SubmittedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
-                                <td>@request.FullName</td>
-                                <td>@Model.GetCategoryDisplay(request.Category)</td>
-                                <td>
-                                    <span class="ontario-badge ontario-badge--@request.Status.ToString().ToLowerInvariant()">
-                                        @request.Status
-                                    </span>
-                                </td>
+                <div class="ontario-table-scroll" role="region" aria-labelledby="requests-caption" tabindex="0">
+                    <table id="requests-table" class="ontario-table">
+                        <caption id="requests-caption" class="ontario-show-for-sr">List of submitted service requests</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Reference</th>
+                                <th scope="col">Submitted</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Status</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var request in Model.Requests)
+                            {
+                                <tr data-request-id="@request.Id">
+                                    <td>CSC-@request.Id.ToString("D5")</td>
+                                    <td>@request.SubmittedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td>@request.FullName</td>
+                                    <td>@Model.GetCategoryDisplay(request.Category)</td>
+                                    <td>
+                                        <span class="ontario-badge ontario-badge--@request.Status.ToString().ToLowerInvariant()">
+                                            @request.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             }
         </div>
     </div>

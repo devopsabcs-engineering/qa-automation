@@ -4,3 +4,18 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@4.0.0/dist/jquery.validate.unobtrusive.min.js"
         crossorigin="anonymous"></script>
+<script>
+        const defaultHighlight = $.validator.defaults.highlight;
+        const defaultUnhighlight = $.validator.defaults.unhighlight;
+
+        $.validator.setDefaults({
+                highlight(element, errorClass, validClass) {
+                        defaultHighlight.call(this, element, errorClass, validClass);
+                        element.setAttribute('aria-invalid', 'true');
+                },
+                unhighlight(element, errorClass, validClass) {
+                        defaultUnhighlight.call(this, element, errorClass, validClass);
+                        element.removeAttribute('aria-invalid');
+                }
+        });
+</script>

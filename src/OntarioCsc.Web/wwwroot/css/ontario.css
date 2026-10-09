@@ -123,6 +123,11 @@ a:focus {
     text-decoration: none;
 }
 
+.ontario-header__logo:hover,
+.ontario-header__logo:focus {
+    color: var(--ontario-colour-white);
+}
+
 .ontario-logo-mark {
     background: var(--ontario-colour-yellow);
     color: var(--ontario-colour-black);
@@ -160,7 +165,8 @@ a:focus {
 }
 
 .ontario-header__nav a:hover,
-.ontario-header__nav a:focus {
+.ontario-header__nav a:focus,
+.ontario-header__nav a[aria-current="page"] {
     color: var(--ontario-colour-yellow);
     border-bottom-color: var(--ontario-colour-yellow);
 }
@@ -190,6 +196,7 @@ a:focus {
 
 .ontario-columns {
     flex: 1 1 100%;
+    min-width: 0;
 }
 
 @media (min-width: 768px) {
@@ -340,8 +347,9 @@ a:focus {
 .ontario-input:focus,
 .ontario-select:focus,
 .ontario-textarea:focus {
-    outline: 3px solid var(--ontario-colour-yellow);
+    outline: 3px solid var(--ontario-colour-black);
     outline-offset: 2px;
+    box-shadow: 0 0 0 6px var(--ontario-colour-yellow);
     border-color: var(--ontario-colour-link);
 }
 
@@ -400,6 +408,15 @@ a:focus {
 }
 
 /* ---------- Table ---------- */
+.ontario-table-scroll {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.ontario-table-scroll .ontario-table {
+    margin: 0;
+}
+
 .ontario-table {
     width: 100%;
     border-collapse: collapse;
@@ -425,6 +442,21 @@ a:focus {
 
 .ontario-table tbody tr:hover {
     background: var(--ontario-colour-yellow-light);
+}
+
+code {
+    overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* ---------- Status badges ---------- */

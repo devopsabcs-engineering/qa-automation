@@ -1,3 +1,7 @@
+@{
+    var currentPage = ViewContext.RouteData.Values["page"] as string;
+    string? Current(string page) => string.Equals(currentPage, page, StringComparison.OrdinalIgnoreCase) ? "page" : null;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +21,10 @@
             </a>
             <nav class="ontario-header__nav" aria-label="Primary navigation">
                 <ul>
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/Requests/Index">Requests</a></li>
-                    <li><a asp-page="/Requests/New">New request</a></li>
-                    <li><a asp-page="/Privacy">Privacy</a></li>
+                    <li><a asp-page="/Index" aria-current="@Current("/Index")">Home</a></li>
+                    <li><a asp-page="/Requests/Index" aria-current="@Current("/Requests/Index")">Requests</a></li>
+                    <li><a asp-page="/Requests/New" aria-current="@Current("/Requests/New")">New request</a></li>
+                    <li><a asp-page="/Privacy" aria-current="@Current("/Privacy")">Privacy</a></li>
                 </ul>
             </nav>
         </div>
