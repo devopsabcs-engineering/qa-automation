@@ -1,0 +1,78 @@
+# GitHub Actions equivalent of .azuredevops/pipelines/teardown.yml.
+#
+# Azure teardown prerequisites:
+#   1. Create a GitHub environment named ontario-csc-teardown and configure
+#      required reviewers to approve deletion runs.
+#   2. Configure a federated credential for this repository/environment on a
+#      Microsoft Entra application or user-assigned managed identity.
+#   3. Add AZURE_CLIENT_ID, AZURE_TENANT_ID, and AZURE_SUBSCRIPTION_ID as
+#      GitHub environment secrets for the ontario-csc-teardown environment.
+#   4. Grant the federated identity permission to delete the target resource
+#      group, scoped as narrowly as practical.
+
+name: Teardown Azure resources
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type DELETE to confirm teardown of the resource group
+        required: true
+        default: 'no'
+        type: string
+      resource_group:
+        description: Resource group to delete
+        required: true
+        default: rg-ontario-csc-dev-cac
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.resource_group }}
+  cancel-in-progress: false
+
+jobs:
+  teardown:
+    name: Delete resource group ${{ inputs.resource_group }}
+    runs-on: ubuntu-latest
+    environment: ontario-csc-teardown
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      CONFIRM: ${{ inputs.confirm }}
+      RESOURCE_GROUP: ${{ inputs.resource_group }}
+    steps:
+      - name: Validate confirmation token
+        shell: pwsh
+        run: |
+          if ($env:CONFIRM -cne 'DELETE') {
+              Write-Error "Confirmation input was '$env:CONFIRM'. Re-run the workflow and set confirm to the literal string DELETE (case-sensitive) to proceed."
+              exit 1
+          }
+          Write-Host "Confirmation accepted. Proceeding with teardown of '$env:RESOURCE_GROUP'."
+
+      - name: Log in to Azure with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Delete resource group ${{ inputs.resource_group }}
+        shell: pwsh
+        run: |
+          $exists = az group exists --name $env:RESOURCE_GROUP | ConvertFrom-Json
+          if (-not $exists) {
+              Write-Host "Resource group '$env:RESOURCE_GROUP' does not exist. Nothing to do."
+              exit 0
+          }
+
+          Write-Host "Deleting resource group '$env:RESOURCE_GROUP' (this can take several minutes)..."
+          az group delete --name $env:RESOURCE_GROUP --yes
+          if ($LASTEXITCODE -ne 0) {
+              throw "az group delete failed with exit code $LASTEXITCODE"
+          }
+          Write-Host "Resource group '$env:RESOURCE_GROUP' deleted."
