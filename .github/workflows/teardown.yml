@@ -71,8 +71,8 @@ jobs:
           }
 
           Write-Host "Deleting resource group '$env:RESOURCE_GROUP' (this can take several minutes)..."
-          az group delete --name $env:RESOURCE_GROUP --yes
+            az group delete --name $env:RESOURCE_GROUP --yes --no-wait
           if ($LASTEXITCODE -ne 0) {
               throw "az group delete failed with exit code $LASTEXITCODE"
           }
-          Write-Host "Resource group '$env:RESOURCE_GROUP' deleted."
+            Write-Host "Deletion request for resource group '$env:RESOURCE_GROUP' accepted."
