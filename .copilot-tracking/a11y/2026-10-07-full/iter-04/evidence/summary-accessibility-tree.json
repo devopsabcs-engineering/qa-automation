@@ -1,0 +1,261 @@
+[
+  {
+    "nodeId": "60",
+    "ignored": false,
+    "role": {
+      "type": "internalRole",
+      "value": "RootWebArea"
+    },
+    "chromeRole": {
+      "type": "internalRole",
+      "value": 144
+    },
+    "name": {
+      "type": "computedString",
+      "value": "Error: New service request - Ontario Common Service Centre",
+      "sources": [
+        {
+          "type": "relatedElement",
+          "attribute": "aria-labelledby"
+        },
+        {
+          "type": "attribute",
+          "attribute": "aria-label"
+        },
+        {
+          "type": "attribute",
+          "attribute": "aria-label",
+          "superseded": true
+        },
+        {
+          "type": "relatedElement",
+          "value": {
+            "type": "computedString",
+            "value": "Error: New service request - Ontario Common Service Centre"
+          },
+          "nativeSource": "title"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "focusable",
+        "value": {
+          "type": "booleanOrUndefined",
+          "value": true
+        }
+      },
+      {
+        "name": "focused",
+        "value": {
+          "type": "booleanOrUndefined",
+          "value": true
+        }
+      },
+      {
+        "name": "url",
+        "value": {
+          "type": "string",
+          "value": "http://localhost:5158/Requests/New"
+        }
+      }
+    ],
+    "childIds": [
+      "69"
+    ],
+    "backendDOMNodeId": 60,
+    "frameId": "F43D1399765B2DB67BB33DF03604A7D5"
+  },
+  {
+    "nodeId": "103",
+    "ignored": false,
+    "role": {
+      "type": "role",
+      "value": "generic"
+    },
+    "chromeRole": {
+      "type": "internalRole",
+      "value": 88
+    },
+    "name": {
+      "type": "computedString",
+      "value": "There is a problem",
+      "sources": [
+        {
+          "type": "relatedElement",
+          "value": {
+            "type": "computedString",
+            "value": "There is a problem"
+          },
+          "attribute": "aria-labelledby",
+          "attributeValue": {
+            "type": "idrefList",
+            "value": "error-summary-title",
+            "relatedNodes": [
+              {
+                "backendDOMNodeId": 104,
+                "idref": "error-summary-title",
+                "text": "There is a problem"
+              }
+            ]
+          }
+        },
+        {
+          "type": "attribute",
+          "attribute": "aria-label",
+          "superseded": true
+        },
+        {
+          "type": "contents",
+          "value": {
+            "type": "computedString",
+            "value": "Enter your email address. Select a service category. Enter your full name. Describe your request."
+          },
+          "superseded": true
+        },
+        {
+          "type": "attribute",
+          "attribute": "title",
+          "superseded": true
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "focusable",
+        "value": {
+          "type": "booleanOrUndefined",
+          "value": true
+        }
+      },
+      {
+        "name": "focused",
+        "value": {
+          "type": "booleanOrUndefined",
+          "value": true
+        }
+      },
+      {
+        "name": "labelledby",
+        "value": {
+          "type": "nodeList",
+          "relatedNodes": [
+            {
+              "backendDOMNodeId": 104,
+              "idref": "error-summary-title",
+              "text": "There is a problem"
+            }
+          ]
+        }
+      }
+    ],
+    "parentId": "102",
+    "childIds": [
+      "104",
+      "105"
+    ],
+    "backendDOMNodeId": 103
+  },
+  {
+    "nodeId": "104",
+    "ignored": false,
+    "role": {
+      "type": "role",
+      "value": "heading"
+    },
+    "chromeRole": {
+      "type": "internalRole",
+      "value": 96
+    },
+    "name": {
+      "type": "computedString",
+      "value": "There is a problem",
+      "sources": [
+        {
+          "type": "relatedElement",
+          "attribute": "aria-labelledby"
+        },
+        {
+          "type": "attribute",
+          "attribute": "aria-label"
+        },
+        {
+          "type": "contents",
+          "value": {
+            "type": "computedString",
+            "value": "There is a problem"
+          }
+        },
+        {
+          "type": "attribute",
+          "attribute": "title",
+          "superseded": true
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "level",
+        "value": {
+          "type": "integer",
+          "value": 2
+        }
+      }
+    ],
+    "parentId": "103",
+    "childIds": [
+      "187"
+    ],
+    "backendDOMNodeId": 104
+  },
+  {
+    "nodeId": "187",
+    "ignored": false,
+    "role": {
+      "type": "internalRole",
+      "value": "StaticText"
+    },
+    "chromeRole": {
+      "type": "internalRole",
+      "value": 158
+    },
+    "name": {
+      "type": "computedString",
+      "value": "There is a problem",
+      "sources": [
+        {
+          "type": "contents",
+          "value": {
+            "type": "computedString",
+            "value": "There is a problem"
+          }
+        }
+      ]
+    },
+    "properties": [],
+    "parentId": "104",
+    "childIds": [
+      "-1000000014"
+    ],
+    "backendDOMNodeId": 187
+  },
+  {
+    "nodeId": "-1000000014",
+    "ignored": false,
+    "role": {
+      "type": "internalRole",
+      "value": "InlineTextBox"
+    },
+    "chromeRole": {
+      "type": "internalRole",
+      "value": 101
+    },
+    "name": {
+      "type": "computedString",
+      "value": "There is a problem"
+    },
+    "properties": [],
+    "parentId": "187",
+    "childIds": []
+  }
+]

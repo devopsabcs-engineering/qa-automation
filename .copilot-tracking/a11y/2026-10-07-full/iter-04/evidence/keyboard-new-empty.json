@@ -1,0 +1,354 @@
+[
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Skip to main content",
+    "href": "#main-content",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 208, 39)",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 57.375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Government of Ontario",
+    "href": "https://www.ontario.ca",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 255, 255)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 67,
+      "y": 18,
+      "width": 153.484375,
+      "height": 45
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Home",
+    "href": "/",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 790.390625,
+      "y": 21.8125,
+      "width": 64.6875,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Requests",
+    "href": "/Requests",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 877.578125,
+      "y": 21.8125,
+      "width": 91.390625,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "New request",
+    "href": "/Requests/New",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 991.46875,
+      "y": 21.8125,
+      "width": 125.078125,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Privacy",
+    "href": "/Privacy",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 1139.046875,
+      "y": 21.8125,
+      "width": 73.953125,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "INPUT",
+    "id": "Input_FullName",
+    "name": "Full name (required)",
+    "href": null,
+    "outline": "rgb(26, 26, 26) solid 3px",
+    "outlineOffset": "2px",
+    "shadow": "rgb(255, 208, 39) 0px 0px 0px 6px",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 255, 255)",
+    "rect": {
+      "x": 67,
+      "y": 347.09375,
+      "width": 750.484375,
+      "height": 49.59375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      false
+    ]
+  },
+  {
+    "tag": "INPUT",
+    "id": "Input_Email",
+    "name": "Email address (required)",
+    "href": null,
+    "outline": "rgb(26, 26, 26) solid 3px",
+    "outlineOffset": "2px",
+    "shadow": "rgb(255, 208, 39) 0px 0px 0px 6px",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 255, 255)",
+    "rect": {
+      "x": 67,
+      "y": 463.0625,
+      "width": 750.484375,
+      "height": 49.59375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      false
+    ]
+  },
+  {
+    "tag": "SELECT",
+    "id": "Input_Category",
+    "name": "-- Select a category --\nDriver and vehicle\nHealth card\nBirth, marriage and death\nBusiness and econom",
+    "href": null,
+    "outline": "rgb(26, 26, 26) solid 3px",
+    "outlineOffset": "2px",
+    "shadow": "rgb(255, 208, 39) 0px 0px 0px 6px",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 255, 255)",
+    "rect": {
+      "x": 67,
+      "y": 579.03125,
+      "width": 750.484375,
+      "height": 51.59375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      false
+    ]
+  },
+  {
+    "tag": "TEXTAREA",
+    "id": "Input_Description",
+    "name": "Describe your request (required)",
+    "href": null,
+    "outline": "rgb(26, 26, 26) solid 3px",
+    "outlineOffset": "2px",
+    "shadow": "rgb(255, 208, 39) 0px 0px 0px 6px",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 255, 255)",
+    "rect": {
+      "x": 67,
+      "y": 697,
+      "width": 750.484375,
+      "height": 145.59375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      false
+    ]
+  },
+  {
+    "tag": "BUTTON",
+    "id": "submit-request",
+    "name": "Submit request",
+    "href": null,
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "0px",
+    "shadow": "none",
+    "color": "rgb(255, 255, 255)",
+    "background": "rgb(0, 102, 204)",
+    "rect": {
+      "x": 67,
+      "y": 846.96875,
+      "width": 180.03125,
+      "height": 52.59375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Cancel",
+    "href": "/",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(0, 102, 204)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 261.59375,
+      "y": 845.96875,
+      "width": 104.3125,
+      "height": 52.59375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Accessibility",
+    "href": "https://www.ontario.ca/page/accessibility",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 67,
+      "y": 792.5625,
+      "width": 107.734375,
+      "height": 27
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Privacy",
+    "href": "https://www.ontario.ca/page/privacy-statement",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 201.734375,
+      "y": 792.5625,
+      "width": 62.453125,
+      "height": 27
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Contact us",
+    "href": "https://www.ontario.ca/page/contact-us",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 291.1875,
+      "y": 792.5625,
+      "width": 94.84375,
+      "height": 27
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "BODY",
+    "id": "",
+    "name": "Skip to main content\nON\nOntario\nHome\nRequests\nNew request\nPrivacy\n\nCommon Service Centre — workshop ",
+    "href": null,
+    "outline": "rgb(26, 26, 26) none 3px",
+    "outlineOffset": "0px",
+    "shadow": "none",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 255, 255)",
+    "rect": {
+      "x": 0,
+      "y": -278,
+      "width": 1280,
+      "height": 1178.234375
+    },
+    "visibleSamples": [
+      true,
+      false,
+      true
+    ]
+  }
+]

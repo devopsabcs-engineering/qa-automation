@@ -1,0 +1,244 @@
+[
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Skip to main content",
+    "href": "#main-content",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 208, 39)",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 57.375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Government of Ontario",
+    "href": "https://www.ontario.ca",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 255, 255)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 67,
+      "y": 18,
+      "width": 153.484375,
+      "height": 45
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Home",
+    "href": "/",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 790.390625,
+      "y": 21.8125,
+      "width": 64.6875,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Requests",
+    "href": "/Requests",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 877.578125,
+      "y": 21.8125,
+      "width": 91.390625,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "New request",
+    "href": "/Requests/New",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 991.46875,
+      "y": 21.8125,
+      "width": 125.078125,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Privacy",
+    "href": "/Privacy",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 1139.046875,
+      "y": 21.8125,
+      "width": 73.953125,
+      "height": 38
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "View all requests",
+    "href": "/Requests",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(0, 102, 204)",
+    "background": "rgb(255, 255, 255)",
+    "rect": {
+      "x": 95.5,
+      "y": 457.34375,
+      "width": 191.515625,
+      "height": 52.59375
+    },
+    "visibleSamples": [
+      true,
+      true,
+      false
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Accessibility",
+    "href": "https://www.ontario.ca/page/accessibility",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 67,
+      "y": 792.328125,
+      "width": 107.734375,
+      "height": 27
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Privacy",
+    "href": "https://www.ontario.ca/page/privacy-statement",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 201.734375,
+      "y": 792.328125,
+      "width": 62.453125,
+      "height": 27
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "A",
+    "id": "",
+    "name": "Contact us",
+    "href": "https://www.ontario.ca/page/contact-us",
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "outlineOffset": "1px",
+    "shadow": "none",
+    "color": "rgb(255, 208, 39)",
+    "background": "rgba(0, 0, 0, 0)",
+    "rect": {
+      "x": 291.1875,
+      "y": 792.328125,
+      "width": 94.84375,
+      "height": 27
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "tag": "BODY",
+    "id": "",
+    "name": "Skip to main content\nON\nOntario\nHome\nRequests\nNew request\nPrivacy\n\nCommon Service Centre — workshop ",
+    "href": null,
+    "outline": "rgb(26, 26, 26) none 3px",
+    "outlineOffset": "0px",
+    "shadow": "none",
+    "color": "rgb(26, 26, 26)",
+    "background": "rgb(255, 255, 255)",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 900
+    },
+    "visibleSamples": [
+      true,
+      true,
+      true
+    ]
+  }
+]

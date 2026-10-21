@@ -1,0 +1,131 @@
+{
+  "samples": [
+    {
+      "mode": "mouse",
+      "title": "New service request - Ontario Common Service Centre",
+      "focus": "submit-request",
+      "summary": false,
+      "live": [],
+      "invalid": [
+        "Input_FullName",
+        "Input_Email",
+        "Input_Description"
+      ],
+      "errors": [
+        "Name must be between 2 and 100 characters.",
+        "Enter a valid email address.",
+        "Description must be between 10 and 1000 characters."
+      ],
+      "validator": {
+        "lastActive": "Input_Description",
+        "focusInvalid": true
+      }
+    },
+    {
+      "mode": "keyboard",
+      "title": "New service request - Ontario Common Service Centre",
+      "focus": "Input_Description",
+      "summary": false,
+      "live": [],
+      "invalid": [
+        "Input_FullName",
+        "Input_Email",
+        "Input_Description"
+      ],
+      "errors": [
+        "Name must be between 2 and 100 characters.",
+        "Enter a valid email address.",
+        "Description must be between 10 and 1000 characters."
+      ],
+      "validator": {
+        "lastActive": "Input_Description",
+        "focusInvalid": true
+      }
+    },
+    {
+      "mode": "direct-values",
+      "title": "New service request - Ontario Common Service Centre",
+      "focus": "Input_FullName",
+      "summary": false,
+      "live": [],
+      "invalid": [
+        "Input_FullName",
+        "Input_Email",
+        "Input_Category",
+        "Input_Description"
+      ],
+      "errors": [
+        "Name must be between 2 and 100 characters.",
+        "Enter a valid email address.",
+        "Select a service category.",
+        "Description must be between 10 and 1000 characters."
+      ],
+      "validator": {
+        "lastActive": "Input_FullName",
+        "focusInvalid": true
+      }
+    },
+    {
+      "mode": "empty",
+      "title": "New service request - Ontario Common Service Centre",
+      "focus": "Input_FullName",
+      "summary": false,
+      "live": [],
+      "invalid": [
+        "Input_FullName",
+        "Input_Email",
+        "Input_Category",
+        "Input_Description"
+      ],
+      "errors": [
+        "Enter your full name.",
+        "Enter your email address.",
+        "Select a service category.",
+        "Describe your request."
+      ],
+      "validator": {
+        "lastActive": "Input_FullName",
+        "focusInvalid": true
+      }
+    },
+    {
+      "mode": "server-errors-corrected-before-submit",
+      "title": "Error: New service request - Ontario Common Service Centre",
+      "focus": "submit-request",
+      "summary": true,
+      "live": [],
+      "invalid": [
+        "Input_Category"
+      ],
+      "errors": [
+        "Select a service category."
+      ],
+      "validator": {
+        "lastActive": "Input_Description",
+        "focusInvalid": true
+      }
+    }
+  ],
+  "summaryLinks": [
+    {
+      "index": 0,
+      "target": "#Input_Email",
+      "active": "Input_Email"
+    },
+    {
+      "index": 1,
+      "target": "#Input_Category",
+      "active": "Input_Category"
+    },
+    {
+      "index": 2,
+      "target": "#Input_FullName",
+      "active": "Input_FullName"
+    },
+    {
+      "index": 3,
+      "target": "#Input_Description",
+      "active": "Input_Description"
+    }
+  ]
+}

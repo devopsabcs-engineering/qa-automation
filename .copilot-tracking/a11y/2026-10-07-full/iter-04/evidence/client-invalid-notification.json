@@ -1,0 +1,272 @@
+{
+  "runs": [
+    {
+      "before": {
+        "focus": "Input_Description",
+        "errors": [
+          "Name must be between 2 and 100 characters.",
+          "Enter a valid email address."
+        ]
+      },
+      "after": {
+        "focus": "submit-request",
+        "title": "New service request - Ontario Common Service Centre",
+        "summary": false,
+        "events": [
+          {
+            "event": "error-mutation",
+            "field": "Input.Description",
+            "text": "Description must be between 10 and 1000 characters.",
+            "focused": ""
+          },
+          {
+            "event": "focusin",
+            "id": "submit-request"
+          }
+        ],
+        "errors": [
+          {
+            "text": "Name must be between 2 and 100 characters.",
+            "html": "<span id=\"Input_FullName-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.FullName\" data-valmsg-replace=\"true\"><span id=\"Input_FullName-error\" class=\"\">Name must be between 2 and 100 characters.</span></span>",
+            "liveAncestor": false
+          },
+          {
+            "text": "Enter a valid email address.",
+            "html": "<span id=\"Input_Email-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.Email\" data-valmsg-replace=\"true\"><span id=\"Input_Email-error\" class=\"\">Enter a valid email address.</span></span>",
+            "liveAncestor": false
+          },
+          {
+            "text": "Description must be between 10 and 1000 characters.",
+            "html": "<span id=\"Input_Description-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.Description\" data-valmsg-replace=\"true\"><span id=\"Input_Description-error\" class=\"\">Description must be between 10 and 1000 characters.</span></span>",
+            "liveAncestor": false
+          }
+        ]
+      }
+    },
+    {
+      "before": {
+        "focus": "Input_Description",
+        "errors": [
+          "Name must be between 2 and 100 characters.",
+          "Enter a valid email address."
+        ]
+      },
+      "after": {
+        "focus": "submit-request",
+        "title": "New service request - Ontario Common Service Centre",
+        "summary": false,
+        "events": [
+          {
+            "event": "error-mutation",
+            "field": "Input.Description",
+            "text": "Description must be between 10 and 1000 characters.",
+            "focused": ""
+          },
+          {
+            "event": "focusin",
+            "id": "submit-request"
+          }
+        ],
+        "errors": [
+          {
+            "text": "Name must be between 2 and 100 characters.",
+            "html": "<span id=\"Input_FullName-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.FullName\" data-valmsg-replace=\"true\"><span id=\"Input_FullName-error\" class=\"\">Name must be between 2 and 100 characters.</span></span>",
+            "liveAncestor": false
+          },
+          {
+            "text": "Enter a valid email address.",
+            "html": "<span id=\"Input_Email-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.Email\" data-valmsg-replace=\"true\"><span id=\"Input_Email-error\" class=\"\">Enter a valid email address.</span></span>",
+            "liveAncestor": false
+          },
+          {
+            "text": "Description must be between 10 and 1000 characters.",
+            "html": "<span id=\"Input_Description-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.Description\" data-valmsg-replace=\"true\"><span id=\"Input_Description-error\" class=\"\">Description must be between 10 and 1000 characters.</span></span>",
+            "liveAncestor": false
+          }
+        ]
+      }
+    },
+    {
+      "before": {
+        "focus": "Input_Description",
+        "errors": [
+          "Name must be between 2 and 100 characters.",
+          "Enter a valid email address."
+        ]
+      },
+      "after": {
+        "focus": "submit-request",
+        "title": "New service request - Ontario Common Service Centre",
+        "summary": false,
+        "events": [
+          {
+            "event": "error-mutation",
+            "field": "Input.Description",
+            "text": "Description must be between 10 and 1000 characters.",
+            "focused": ""
+          },
+          {
+            "event": "focusin",
+            "id": "submit-request"
+          }
+        ],
+        "errors": [
+          {
+            "text": "Name must be between 2 and 100 characters.",
+            "html": "<span id=\"Input_FullName-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.FullName\" data-valmsg-replace=\"true\"><span id=\"Input_FullName-error\" class=\"\">Name must be between 2 and 100 characters.</span></span>",
+            "liveAncestor": false
+          },
+          {
+            "text": "Enter a valid email address.",
+            "html": "<span id=\"Input_Email-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.Email\" data-valmsg-replace=\"true\"><span id=\"Input_Email-error\" class=\"\">Enter a valid email address.</span></span>",
+            "liveAncestor": false
+          },
+          {
+            "text": "Description must be between 10 and 1000 characters.",
+            "html": "<span id=\"Input_Description-error-message\" class=\"ontario-error-message field-validation-error\" data-valmsg-for=\"Input.Description\" data-valmsg-replace=\"true\"><span id=\"Input_Description-error\" class=\"\">Description must be between 10 and 1000 characters.</span></span>",
+            "liveAncestor": false
+          }
+        ]
+      }
+    }
+  ],
+  "focusAndLive": [
+    {
+      "nodeId": "28",
+      "ignored": false,
+      "role": {
+        "type": "internalRole",
+        "value": "RootWebArea"
+      },
+      "chromeRole": {
+        "type": "internalRole",
+        "value": 144
+      },
+      "name": {
+        "type": "computedString",
+        "value": "New service request - Ontario Common Service Centre",
+        "sources": [
+          {
+            "type": "relatedElement",
+            "attribute": "aria-labelledby"
+          },
+          {
+            "type": "attribute",
+            "attribute": "aria-label"
+          },
+          {
+            "type": "attribute",
+            "attribute": "aria-label",
+            "superseded": true
+          },
+          {
+            "type": "relatedElement",
+            "value": {
+              "type": "computedString",
+              "value": "New service request - Ontario Common Service Centre"
+            },
+            "nativeSource": "title"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "focusable",
+          "value": {
+            "type": "booleanOrUndefined",
+            "value": true
+          }
+        },
+        {
+          "name": "focused",
+          "value": {
+            "type": "booleanOrUndefined",
+            "value": true
+          }
+        },
+        {
+          "name": "url",
+          "value": {
+            "type": "string",
+            "value": "http://localhost:5158/Requests/New"
+          }
+        }
+      ],
+      "childIds": [
+        "49"
+      ],
+      "backendDOMNodeId": 28,
+      "frameId": "F1FD16D823A7A650CED5C29496F92A4D"
+    },
+    {
+      "nodeId": "38",
+      "ignored": false,
+      "role": {
+        "type": "role",
+        "value": "button"
+      },
+      "chromeRole": {
+        "type": "internalRole",
+        "value": 9
+      },
+      "name": {
+        "type": "computedString",
+        "value": "Submit request",
+        "sources": [
+          {
+            "type": "relatedElement",
+            "attribute": "aria-labelledby"
+          },
+          {
+            "type": "attribute",
+            "attribute": "aria-label"
+          },
+          {
+            "type": "relatedElement",
+            "nativeSource": "label"
+          },
+          {
+            "type": "contents",
+            "value": {
+              "type": "computedString",
+              "value": "Submit request"
+            }
+          },
+          {
+            "type": "attribute",
+            "attribute": "title",
+            "superseded": true
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "invalid",
+          "value": {
+            "type": "token",
+            "value": "false"
+          }
+        },
+        {
+          "name": "focusable",
+          "value": {
+            "type": "booleanOrUndefined",
+            "value": true
+          }
+        },
+        {
+          "name": "focused",
+          "value": {
+            "type": "booleanOrUndefined",
+            "value": true
+          }
+        }
+      ],
+      "parentId": "82",
+      "childIds": [
+        "156"
+      ],
+      "backendDOMNodeId": 38
+    }
+  ]
+}

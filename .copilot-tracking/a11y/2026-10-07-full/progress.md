@@ -1,7 +1,7 @@
 ---
 title: "Accessibility progress: 2026-10-07 full app"
 description: "Iteration trend for the Ontario CSC accessibility detect and resolve loop"
-ms.date: 2026-10-09
+ms.date: 2026-10-21
 ---
 
 | Iter | Date       | Score | Grade | Verdict     | Blocking | Fixed | New | Regressed | Needs human |
@@ -9,3 +9,4 @@ ms.date: 2026-10-09
 | 01   | 2026-10-07 | 62    | D     | FAIL        | 3        | 0     | 10  | 0         | 0           |
 | 02   | 2026-10-09 | 61    | D     | FAIL        | 3        | 0     | 1   | 0         | 0           |
 | 03   | 2026-10-09 | 100   | A     | CONDITIONAL | 0        | 11    | 0   | 0         | 0           |
+| 04   | 2026-10-21 | 90    | A     | FAIL        | 1        | 0     | 2   | 0         | 0           |

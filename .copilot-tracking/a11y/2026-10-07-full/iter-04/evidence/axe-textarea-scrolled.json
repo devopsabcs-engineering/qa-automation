@@ -1,0 +1,88 @@
+{
+  "testEngine": {
+    "name": "axe-core",
+    "version": "4.10.3"
+  },
+  "testRunner": {
+    "name": "axe"
+  },
+  "testEnvironment": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
+    "windowWidth": 1280,
+    "windowHeight": 900,
+    "orientationAngle": 0,
+    "orientationType": "landscape-primary"
+  },
+  "timestamp": "2026-10-21T15:35:32.033Z",
+  "url": "http://localhost:5158/Requests/New#Input_Description",
+  "toolOptions": {
+    "runOnly": {
+      "type": "rule",
+      "values": [
+        "color-contrast"
+      ]
+    },
+    "resultTypes": [
+      "violations",
+      "incomplete",
+      "passes"
+    ],
+    "reporter": "v1"
+  },
+  "inapplicable": [],
+  "passes": [],
+  "incomplete": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "13.5pt (18px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<textarea class=\"ontario-input ontario-textarea valid\" rows=\"5\" required=\"\" aria-describedby=\"Input_Description-error-message\" data-val=\"true\" data-val-length=\"Description must be between 10 and 1000 characters.\" data-val-length-max=\"1000\" data-val-length-min=\"10\" data-val-required=\"Describe your request.\" id=\"Input_Description\" maxlength=\"1000\" name=\"Input.Description\" aria-invalid=\"false\">",
+                  "target": [
+                    "#Input_Description"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<textarea class=\"ontario-input ontario-textarea valid\" rows=\"5\" required=\"\" aria-describedby=\"Input_Description-error-message\" data-val=\"true\" data-val-length=\"Description must be between 10 and 1000 characters.\" data-val-length-max=\"1000\" data-val-length-min=\"10\" data-val-required=\"Describe your request.\" id=\"Input_Description\" maxlength=\"1000\" name=\"Input.Description\" aria-invalid=\"false\">",
+          "target": [
+            "#Input_Description"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        }
+      ]
+    }
+  ],
+  "violations": []
+}

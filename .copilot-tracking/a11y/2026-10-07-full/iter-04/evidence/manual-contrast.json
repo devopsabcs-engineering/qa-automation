@@ -1,0 +1,54 @@
+{
+  "headerFocus": {
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "color": "rgb(255, 255, 255)",
+    "html": "<a class=\"ontario-header__logo\" href=\"https://www.ontario.ca\" aria-label=\"Government of Ontario\">\n                <span class=\"ontario-logo-mark\" aria-hidden=\"true\">ON</span>\n                <span class=\"ontario-logo-text\">Ontario</span>\n            </a>"
+  },
+  "footerFocus": {
+    "outline": "rgb(16, 16, 16) auto 1px",
+    "color": "rgb(255, 208, 39)"
+  },
+  "hero": {
+    "background": "linear-gradient(rgb(255, 244, 196) 0%, rgb(255, 255, 255) 100%)",
+    "children": [
+      {
+        "text": "Common Service Centre (CSC)",
+        "color": "rgb(51, 51, 51)"
+      },
+      {
+        "text": "Request a Government of Ontario service",
+        "color": "rgb(26, 26, 26)"
+      },
+      {
+        "text": "Submit a non-urgent request to the Common Service Centre. A service\n                representative will follow up by email within five business days.",
+        "color": "rgb(51, 51, 51)"
+      }
+    ],
+    "ratios": [
+      {
+        "text": "Common Service Centre (CSC)",
+        "minimum": 11.42496314340595
+      },
+      {
+        "text": "Request a Government of Ontario service",
+        "minimum": 15.737969174009493
+      },
+      {
+        "text": "Submit a non-urgent request to the Common Service Centre. A service\n                representative will follow up by email within five business days.",
+        "minimum": 11.42496314340595
+      }
+    ]
+  },
+  "textarea": {
+    "foreground": "#1a1a1a",
+    "backgrounds": [
+      "#ffffff",
+      "#f9e3e3"
+    ],
+    "ratios": [
+      17.40432753274219,
+      14.19264204756047
+    ]
+  },
+  "note": "Gradient endpoints bound each color channel; dark foreground is worst against the darker endpoint. Textarea colours are opaque and authored; scrolling checks eliminate the obscured-viewport candidate."
+}

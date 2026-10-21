@@ -1,0 +1,39 @@
+{
+  "routes": [
+    "/",
+    "/Privacy",
+    "/Requests",
+    "/Requests/New",
+    "/Error"
+  ],
+  "source": "All project-owned Razor views, page models, Program.cs and wwwroot/css/ontario.css; no project-owned JS files outside inline Razor scripts.",
+  "checks": {
+    "imageAlt": "No img elements; decorative ON mark aria-hidden=true; logo anchor has an accessible name.",
+    "noninteractiveClicks": "No onclick handlers on div/span.",
+    "tabindex": "No positive tabindex; main, summary, confirmation use -1 for programmatic focus; table scroll region uses 0.",
+    "zoom": "Viewport does not prohibit scaling.",
+    "titles": "Every page sets ViewData Title; server rejection and confirmation have state-specific titles; client rejection does not, recorded with A11Y-013.",
+    "labels": "Four visible asp-for labels; rendered labels, required, name/email autocomplete and stable describedby IDs verified.",
+    "errors": "Field relations and invalid state pass; client notification fails on exact path in A11Y-013.",
+    "table": "Caption and scoped column headings present; a simple column-header table does not require row th solely because a reference column exists. Labeled keyboard scroll region works.",
+    "headings": "One h1 per rendered state, no skipped heading levels.",
+    "focus": "Native auto focus outline retained on links/buttons; screenshots confirm a contrasting white component on dark surfaces despite computed auto outline RGB. Authored form outlines are solid 3px with a yellow halo.",
+    "textContrast": "No axe violations; hero gradient manually bounded at 11.42:1 for #333 text and 15.74:1 for #1a text. Opaque textarea colors manually checked. See manual-contrast.json.",
+    "motion": "Reduced-motion duration override computed as .00001s.",
+    "layout": "All states pass normal 320px reflow; error prose overflows with spacing overrides, A11Y-014.",
+    "duplicateLinks": "Privacy links still need content/context review, A11Y-011."
+  },
+  "excludedFalseAlarms": [
+    "Offscreen skip link is deliberately 1x1 when unfocused; first Tab reveals it and Enter focuses main. It is not a clipped-text/target-size defect.",
+    "Native auto focus computed RGB alone does not describe the white contrast edge visible in Chromium screenshots.",
+    "Table horizontal scrolling is contained and exempt; no body horizontal overflow in the seeded table state.",
+    "axe gradient/textarea contrast incomplete results were manually assessed, not counted as violations."
+  ],
+  "coverageLimits": [
+    "Chromium only",
+    "No live screen reader session",
+    "No exhaustive browser/AT or forced-colors matrix",
+    "No plain-language/legal/content review",
+    "No exhaustive combinations of arbitrary user-entered content"
+  ]
+}
