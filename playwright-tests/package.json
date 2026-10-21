@@ -5,6 +5,8 @@
   "description": "Playwright end-to-end UI tests for the Ontario CSC sample web app",
   "scripts": {
     "test": "playwright test",
+    "test:functional": "playwright test tests/functional",
+    "test:accessibility": "playwright test tests/accessibility",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "report": "playwright show-report",

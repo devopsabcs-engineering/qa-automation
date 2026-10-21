@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { NewRequestPage, uniqueRequest } from '../pages/NewRequestPage';
+import { NewRequestPage, uniqueRequest } from '../../pages/NewRequestPage';
 
 test.describe('Submit a new service request', () => {
   let form: NewRequestPage;

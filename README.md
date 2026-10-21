@@ -97,13 +97,33 @@ and runs both desktop and mobile Chromium Playwright projects. Playwright starts
 the local app unless you supply `-BaseUrl`. Stop a separately running local app
 before building on Windows to avoid locked application binaries.
 
-To run only accessibility checks:
+Specs are organized by purpose; both suites share the existing page objects:
 
-```powershell
-.\scripts\run-tests.ps1 -SkipUnit -Grep "@a11y"
+```text
+playwright-tests/
+  pages/                         Shared page objects and test data
+  tests/
+    accessibility/               axe scans and accessibility assertions
+      accessibility.spec.ts
+    functional/                  Navigation, submission and validation behavior
+      navigation.spec.ts
+      new-request.spec.ts
+      requests-list.spec.ts
 ```
 
-[accessibility.spec.ts](playwright-tests/tests/accessibility.spec.ts) uses
+To run either suite independently:
+
+```powershell
+.\scripts\run-tests.ps1 -SkipUnit -Suite Accessibility
+.\scripts\run-tests.ps1 -SkipUnit -Suite Functional
+```
+
+`-Suite All` is the default and preserves the combined run. `-Project`, `-Grep`
+and `-Headed` can be combined with a suite selection. From
+[playwright-tests](playwright-tests/), use `npm run test:accessibility` or
+`npm run test:functional`; `npm test` still runs both suites.
+
+[accessibility.spec.ts](playwright-tests/tests/accessibility/accessibility.spec.ts) uses
 `@axe-core/playwright` to scan all five routes plus client required-field errors,
 client format/length errors, server validation errors, and submission confirmation.
 The scans include WCAG 2.2 Level A/AA rules and axe best practices, without
@@ -116,10 +136,14 @@ to the Playwright report. Open it with `npx playwright show-report` from
 [playwright-tests](playwright-tests/); JUnit XML is written to
 `playwright-tests/test-results/junit.xml`.
 
-The [GitHub CI/CD workflow](.github/workflows/ci-cd.yml) runs the same specs with
-`npx playwright test` in its UI and accessibility job. It publishes combined JUnit
-results and uploads the HTML report with axe attachments even when a test fails.
-The deployment job depends on this job succeeding.
+The [GitHub CI/CD workflow](.github/workflows/ci-cd.yml) uses a suite matrix to
+run functional and accessibility tests as separate jobs, each on desktop and
+mobile Chromium. Each job publishes its own JUnit check and uploads a distinct
+artifact (`playwright-functional-report` or `playwright-accessibility-report`).
+The accessibility HTML report includes axe attachments. Reports are published
+even when tests fail, and a failure in one suite does not cancel the other suite.
+Deployment requires both matrix jobs to succeed. Local runs retain the shared
+report paths above; a later local run replaces the previous report.
 
 Passing axe checks does not establish WCAG conformance. Incomplete results need
 human review, and automatic scans do not cover every interaction or layout barrier.

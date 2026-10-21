@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { test, expect, type Page, type TestInfo } from '@playwright/test';
-import { NewRequestPage, uniqueRequest } from '../pages/NewRequestPage';
+import { NewRequestPage, uniqueRequest } from '../../pages/NewRequestPage';
 
 async function expectAccessible(page: Page, testInfo: TestInfo) {
   const results = await new AxeBuilder({ page })

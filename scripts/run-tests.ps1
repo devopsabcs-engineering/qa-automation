@@ -31,6 +31,10 @@
 .PARAMETER Project
     Playwright project(s) to run (chromium, mobile-chromium). Default: all.
 
+.PARAMETER Suite
+    Playwright suite to run (All, Functional, Accessibility). Default: All.
+    Does not change whether xUnit runs; use -SkipUnit for Playwright only.
+
 .PARAMETER Grep
     Only run Playwright tests whose title matches this pattern.
 
@@ -49,8 +53,12 @@
     Run only the Playwright validation tests in desktop Chromium with a visible browser.
 
 .EXAMPLE
-    ./scripts/run-tests.ps1 -SkipUnit -Grep "@a11y"
+    ./scripts/run-tests.ps1 -SkipUnit -Suite Accessibility
     Run only the axe accessibility tests in both desktop and mobile Chromium.
+
+.EXAMPLE
+    ./scripts/run-tests.ps1 -SkipUnit -Suite Functional
+    Run only the functional UI tests in both desktop and mobile Chromium.
 
 .EXAMPLE
     ./scripts/run-tests.ps1 -SkipUnit -BaseUrl https://app-ontario-csc-dev-cac.azurewebsites.net
@@ -65,6 +73,8 @@ param(
     [string]   $BaseUrl,
     [int]      $Port = 5158,
     [string[]] $Project,
+    [ValidateSet('All', 'Functional', 'Accessibility')]
+    [string]   $Suite = 'All',
     [string]   $Grep,
     [switch]   $Headed,
     [switch]   $OpenReport
@@ -118,7 +128,7 @@ if (-not $SkipUnit) {
 }
 
 if (-not $SkipE2E) {
-    Write-Step 'Running Playwright UI and accessibility tests'
+    Write-Step "Running Playwright tests (suite: $Suite)"
     if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
         throw 'Node.js / npm is required for the Playwright tests. Install Node.js 20+ or rerun with -SkipE2E.'
     }
@@ -143,6 +153,7 @@ if (-not $SkipE2E) {
         if ($BaseUrl) { $env:E2E_BASE_URL = $BaseUrl } else { Remove-Item Env:E2E_BASE_URL -ErrorAction SilentlyContinue }
 
         $pwArgs = @('playwright', 'test')
+        if ($Suite -ne 'All') { $pwArgs += "tests/$($Suite.ToLowerInvariant())" }
         foreach ($p in $Project) { $pwArgs += "--project=$p" }
         if ($Grep)   { $pwArgs += @('--grep', $Grep) }
         if ($Headed) { $pwArgs += '--headed' }
@@ -167,11 +178,11 @@ if (-not $SkipE2E) {
 
 Write-Step 'Summary'
 $failed = $false
-foreach ($suite in $results.Keys) {
-    $ok = $results[$suite] -eq 0
+foreach ($suiteName in $results.Keys) {
+    $ok = $results[$suiteName] -eq 0
     if (-not $ok) { $failed = $true }
-    $status = if ($ok) { 'PASSED' } else { "FAILED (exit $($results[$suite]))" }
-    Write-Host ("    {0,-12} {1}" -f $suite, $status) -ForegroundColor ($(if ($ok) { 'Green' } else { 'Red' }))
+    $status = if ($ok) { 'PASSED' } else { "FAILED (exit $($results[$suiteName]))" }
+    Write-Host ("    {0,-12} {1}" -f $suiteName, $status) -ForegroundColor ($(if ($ok) { 'Green' } else { 'Red' }))
 }
 
 exit ([int]$failed)
