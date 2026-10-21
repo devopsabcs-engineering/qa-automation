@@ -1,5 +1,5 @@
 ---
-name: A11y Detector
+name: A11y Detector (local)
 description: "Detects WCAG 2.2 AA barriers in the Ontario CSC app via static, axe-core, and keyboard/form checks; reports per-iteration deltas"
 tools:
   - read

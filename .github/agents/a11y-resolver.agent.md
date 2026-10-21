@@ -1,5 +1,5 @@
 ---
-name: A11y Resolver
+name: A11y Resolver (local)
 description: "Fixes A11y Detector findings in Razor Pages and CSS with minimal, root-cause diffs, spot-checks each fix, and hands back for re-scan"
 tools:
   - read
@@ -11,11 +11,11 @@ tools:
   - todo
 handoffs:
   - label: "Re-scan and verify"
-    agent: A11y Detector
+    agent: A11y Detector (local)
     prompt: "Run the next iteration of the current a11y run: restart the app, re-scan the same scope, verify the claims in remediation.md, and report the delta."
     send: true
   - label: "Fresh full baseline"
-    agent: A11y Detector
+    agent: A11y Detector (local)
     prompt: "Start a fresh a11y run with a full baseline scan of every page and state."
     send: false
 ---
