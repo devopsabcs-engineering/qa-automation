@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Run every test suite for the Ontario CSC sample app: xUnit (unit + integration) and Playwright (UI).
+    Run every test suite for the Ontario CSC sample app: xUnit and Playwright UI + accessibility.
 
 .DESCRIPTION
     1. Builds the solution once.
     2. Runs the xUnit test project with TRX results and Cobertura code coverage (TestResults/).
-    3. Installs Playwright npm packages and the Chromium browser when needed, then runs the
-       Playwright UI tests. Playwright starts the web app itself (see playwright-tests/playwright.config.ts)
+    3. Installs locked Playwright npm packages and the Chromium browser, then runs the
+       UI and axe accessibility tests. Playwright starts the web app itself (see playwright-tests/playwright.config.ts)
        unless -BaseUrl points at an already-running or deployed instance.
     4. Prints a summary and exits non-zero if any suite failed.
 
@@ -17,7 +17,7 @@
     Skip the xUnit tests.
 
 .PARAMETER SkipE2E
-    Skip the Playwright UI tests.
+    Skip the Playwright UI and accessibility tests.
 
 .PARAMETER NoBuild
     Skip the solution build (use the output of a previous build).
@@ -47,6 +47,10 @@
 .EXAMPLE
     ./scripts/run-tests.ps1 -SkipUnit -Project chromium -Grep "validation" -Headed
     Run only the Playwright validation tests in desktop Chromium with a visible browser.
+
+.EXAMPLE
+    ./scripts/run-tests.ps1 -SkipUnit -Grep "@a11y"
+    Run only the axe accessibility tests in both desktop and mobile Chromium.
 
 .EXAMPLE
     ./scripts/run-tests.ps1 -SkipUnit -BaseUrl https://app-ontario-csc-dev-cac.azurewebsites.net
@@ -114,7 +118,7 @@ if (-not $SkipUnit) {
 }
 
 if (-not $SkipE2E) {
-    Write-Step 'Running Playwright UI tests'
+    Write-Step 'Running Playwright UI and accessibility tests'
     if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
         throw 'Node.js / npm is required for the Playwright tests. Install Node.js 20+ or rerun with -SkipE2E.'
     }
@@ -126,10 +130,8 @@ if (-not $SkipE2E) {
 
     Push-Location $e2eDir
     try {
-        if (-not (Test-Path (Join-Path $e2eDir 'node_modules/@playwright/test'))) {
-            Write-Host '    Installing npm packages' -ForegroundColor DarkGray
-            if ((Invoke-Native npm @('ci')) -ne 0) { throw 'npm ci failed.' }
-        }
+        Write-Host '    Installing locked npm packages' -ForegroundColor DarkGray
+        if ((Invoke-Native npm @('ci')) -ne 0) { throw 'npm ci failed.' }
 
         if ((Invoke-Native npx @('playwright', 'install', 'chromium')) -ne 0) {
             throw 'Playwright browser install failed.'

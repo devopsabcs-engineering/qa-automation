@@ -11,19 +11,19 @@ tools:
   - todo
 handoffs:
   - label: "Fix blocking findings"
-    agent: A11y Resolver
+    agent: A11y Resolver (local)
     prompt: "Fix every open blocking finding (critical and serious) in the latest iteration of the current a11y run, verify, and hand back for re-scan."
     send: true
   - label: "Fix all open findings"
-    agent: A11y Resolver
+    agent: A11y Resolver (local)
     prompt: "Fix every open finding in the latest iteration of the current a11y run, blocking first, verify, and hand back for re-scan."
     send: true
   - label: "Fix selected findings"
-    agent: A11y Resolver
+    agent: A11y Resolver (local)
     prompt: "Fix only these findings from the latest iteration of the current a11y run: A11Y-"
     send: false
   - label: "Lock in with regression tests"
-    agent: A11y Resolver
+    agent: A11y Resolver (local)
     prompt: "Add xUnit markup regression tests in tests/OntarioCsc.Web.Tests for the findings confirmed fixed in the current a11y run, then run dotnet test."
     send: false
 ---

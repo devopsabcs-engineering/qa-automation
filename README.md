@@ -1,4 +1,7 @@
-# Ontario CSC — QA automation workshop sample
+---
+title: "Ontario CSC QA automation workshop sample"
+description: "Run, test and deploy the Ontario Common Service Centre workshop application"
+---
 
 A small ASP.NET Core 10 sample application styled after the [Ontario Design System](https://designsystem.ontario.ca) for the Government of Ontario **Common Service Centre (CSC)** cluster QA automation workshops. The app exists so participants have a real, deployable target to write automated tests against — first .NET unit tests, and later [Playwright](https://playwright.dev) end-to-end tests that flow back into Azure DevOps work items and test plans.
 
@@ -80,6 +83,48 @@ Today there are 23 tests across three suites:
 | `ServiceRequestServiceTests` | EF Core in-memory database behaviour through `IServiceRequestService` (CRUD, ordering, status updates, seeding). |
 | `ServiceRequestValidationTests` | Data-annotation rules on the `ServiceRequest` model (these are the same rules the form binds to). |
 | `WebHostSmokeTests` | End-to-end smoke through `WebApplicationFactory<Program>` to confirm every page returns 200 and renders Ontario markup. |
+
+### Playwright UI and accessibility tests
+
+Install Node.js 22 in addition to the .NET SDK, then run all suites from the repository root:
+
+```powershell
+.\scripts\run-tests.ps1
+```
+
+The runner installs packages from the lockfile, builds the solution, runs xUnit,
+and runs both desktop and mobile Chromium Playwright projects. Playwright starts
+the local app unless you supply `-BaseUrl`. Stop a separately running local app
+before building on Windows to avoid locked application binaries.
+
+To run only accessibility checks:
+
+```powershell
+.\scripts\run-tests.ps1 -SkipUnit -Grep "@a11y"
+```
+
+[accessibility.spec.ts](playwright-tests/tests/accessibility.spec.ts) uses
+`@axe-core/playwright` to scan all five routes plus client required-field errors,
+client format/length errors, server validation errors, and submission confirmation.
+The scans include WCAG 2.2 Level A/AA rules and axe best practices, without
+excluding elements or disabling rules. Additional assertions protect field error
+associations, required labels, server error-summary focus and confirmation focus.
+
+Any axe violation or assertion failure makes the suite and runner fail.
+Each scan attaches its full axe JSON, including violations and incomplete checks,
+to the Playwright report. Open it with `npx playwright show-report` from
+[playwright-tests](playwright-tests/); JUnit XML is written to
+`playwright-tests/test-results/junit.xml`.
+
+The [GitHub CI/CD workflow](.github/workflows/ci-cd.yml) runs the same specs with
+`npx playwright test` in its UI and accessibility job. It publishes combined JUnit
+results and uploads the HTML report with axe attachments even when a test fails.
+The deployment job depends on this job succeeding.
+
+Passing axe checks does not establish WCAG conformance. Incomplete results need
+human review, and automatic scans do not cover every interaction or layout barrier.
+The prior audit's client error-notification issue (A11Y-013) and increased-spacing
+overflow (A11Y-014) remain unresolved by this test-only change.
 
 ## Azure DevOps pipeline
 
